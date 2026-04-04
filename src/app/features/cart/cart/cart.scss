@@ -1,0 +1,17 @@
+.cart-container {
+  padding: 20px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+button {
+  background: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+}
