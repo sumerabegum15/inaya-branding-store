@@ -1,14 +1,26 @@
 .navbar {
   display: flex;
   justify-content: space-between;
-  padding: 15px 30px;
+  padding: 0 15px;
   background: #111;
   color: white;
+  .links {
+    padding: 20px;
+    a {
+      margin-left: 20px;
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+  }
 }
 
-.navbar a {
-  margin-left: 20px;
+.footer {
+  text-align: center;
+  background: #111;
   color: white;
-  text-decoration: none;
-  font-weight: 500;
+  margin-top: 20px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }

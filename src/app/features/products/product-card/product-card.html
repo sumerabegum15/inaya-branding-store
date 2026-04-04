@@ -6,6 +6,10 @@
     <p class="category">{{ product.category }}</p>
     <p class="price">₹{{ product.price }}</p>
 
-    <button [disabled]="product.quantity > 0" (click)="addToCart()">Add to Cart</button>
+    <button 
+      (click)="addToCart()" 
+      [disabled]="added">
+      {{ added ? 'Added ✓' : 'Add to Cart' }}
+    </button>
   </div>
 </div>

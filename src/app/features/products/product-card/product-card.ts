@@ -11,10 +11,15 @@ import { CommonModule } from '@angular/common';
 export class ProductCard {
   @Input() product: any;
 
-constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService) {}
 
-addToCart() {
-  this.cartService.addToCart(this.product);
-}
+  added = false;
+
+  addToCart() {
+    this.cartService.addToCart(this.product);
+    this.added = true;
+
+    setTimeout(() => this.added = false, 1000);
+  }
 
 }
