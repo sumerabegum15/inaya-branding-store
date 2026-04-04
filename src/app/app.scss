@@ -1,0 +1,17 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 30px;
+  background: #111;
+  color: white;
+}
+
+.links a {
+  margin-left: 20px;
+  color: white;
+  font-weight: 500;
+}
+
+.logo {
+  margin: 0;
+}

@@ -1,0 +1,7 @@
+@for (item of items; track $index) {
+  <div>
+    {{item.name}} - ₹{{item.price}} x {{item.quantity}}
+    <button (click)="removeItem($index)">Remove</button>
+  </div>
+}
+<h3>Total: ₹{{ getTotal() }}</h3>
