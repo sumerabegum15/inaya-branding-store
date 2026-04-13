@@ -1,18 +1,8 @@
 import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-
-export interface Product {
-  id: number;
-  name: string;
-  category: string;
-  price: number;
-  emoji: string;
-  bg: string;
-  badge?: string;
-  rating: number;
-  reviews: number;
-}
+import { Product } from '../../core/models/product';
+import { ProductCard } from '../products/product-card/product-card';
 
 export interface Category {
   label: string;
@@ -25,7 +15,7 @@ export interface Category {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ProductCard],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
@@ -43,12 +33,12 @@ export class Home {
 
   // ── Featured Products
   featuredProducts: Product[] = [
-    { id: 1, name: 'Sunny Dino Tee',    category: 'Kids',  price: 24.99, emoji: '🦕', bg: 'linear-gradient(135deg,#FFD166,#FFAA4C)', badge: 'New',  rating: 4.8, reviews: 120 },
-    { id: 2, name: 'Rainbow Hoodie',    category: 'Kids',  price: 44.99, emoji: '🌈', bg: 'linear-gradient(135deg,#FF6B6B,#FFB3B3)', badge: 'Hot',  rating: 4.9, reviews: 98  },
-    { id: 3, name: 'Ocean Shorts',      category: 'Boys',  price: 19.99, emoji: '🌊', bg: 'linear-gradient(135deg,#74C7EC,#4BA6D4)', badge: '',     rating: 4.6, reviews: 64  },
-    { id: 4, name: 'Star Dress',        category: 'Girls', price: 34.99, emoji: '⭐', bg: 'linear-gradient(135deg,#6BCFB0,#4BB89A)', badge: 'Sale', rating: 4.7, reviews: 87  },
-    { id: 5, name: 'Cozy Joggers',      category: 'Boys',  price: 29.99, emoji: '🧸', bg: 'linear-gradient(135deg,#5E2D79,#9B6BB5)', badge: '',     rating: 4.5, reviews: 55  },
-    { id: 6, name: 'Butterfly Blouse',  category: 'Women', price: 39.99, emoji: '🦋', bg: 'linear-gradient(135deg,#FFD166,#FF6B6B)', badge: 'New',  rating: 4.8, reviews: 143 },
+    { id: 1, name: 'Sunny Dino Tee',    category: 'Kids',  price: 24.99, image: '🦕', bg: 'linear-gradient(135deg,#FFD166,#FFAA4C)', badge: 'New',  rating: 4.8, reviews: 120 },
+    { id: 2, name: 'Rainbow Hoodie',    category: 'Kids',  price: 44.99, image: '🌈', bg: 'linear-gradient(135deg,#FF6B6B,#FFB3B3)', badge: 'Hot',  rating: 4.9, reviews: 98  },
+    { id: 3, name: 'Ocean Shorts',      category: 'Boys',  price: 19.99, image: '🌊', bg: 'linear-gradient(135deg,#74C7EC,#4BA6D4)', badge: '',     rating: 4.6, reviews: 64  },
+    { id: 4, name: 'Star Dress',        category: 'Girls', price: 34.99, image: '⭐', bg: 'linear-gradient(135deg,#6BCFB0,#4BB89A)', badge: 'Sale', rating: 4.7, reviews: 87  },
+    { id: 5, name: 'Cozy Joggers',      category: 'Boys',  price: 29.99, image: '🧸', bg: 'linear-gradient(135deg,#5E2D79,#9B6BB5)', badge: '',     rating: 4.5, reviews: 55  },
+    { id: 6, name: 'Butterfly Blouse',  category: 'Women', price: 39.99, image: '🦋', bg: 'linear-gradient(135deg,#FFD166,#FF6B6B)', badge: 'New',  rating: 4.8, reviews: 143 },
   ];
 
   // ── Why us features
@@ -66,61 +56,28 @@ export class Home {
     { value: '4.9★', label: 'Rating'      },
   ];
 
-  // ── Wishlist state per product
-  wishlist = signal<Set<number>>(new Set());
-
-  // ── Cart added state (visual feedback)
-  addedToCart = signal<Set<number>>(new Set());
-
   // ── Navigation
   goTo(path: string) {
     this.router.navigate([path]);
   }
 
-  // ── Toggle wishlist
-  toggleWishlist(productId: number, event: Event) {
-    event.stopPropagation();
-    const current = new Set(this.wishlist());
-    current.has(productId) ? current.delete(productId) : current.add(productId);
-    this.wishlist.set(current);
-  }
-
-  isWishlisted(productId: number): boolean {
-    return this.wishlist().has(productId);
-  }
-
   // ── Add to cart (wire up to CartService)
-  addToCart(product: Product, event: Event) {
-    event.stopPropagation();
+  // addToCart(product: Product, event: Event) {
+  //   event.stopPropagation();
 
-    // TODO: inject CartService and call cartService.addToCart(product)
+  //   // TODO: inject CartService and call cartService.addToCart(product)
 
-    const current = new Set(this.addedToCart());
-    current.add(product.id);
-    this.addedToCart.set(current);
-    setTimeout(() => {
-      const updated = new Set(this.addedToCart());
-      updated.delete(product.id);
-      this.addedToCart.set(updated);
-    }, 1500);
-  }
+  //   const current = new Set(this.addedToCart());
+  //   current.add(product.id);
+  //   this.addedToCart.set(current);
+  //   setTimeout(() => {
+  //     const updated = new Set(this.addedToCart());
+  //     updated.delete(product.id);
+  //     this.addedToCart.set(updated);
+  //   }, 1500);
+  // }
 
-  isAdded(productId: number): boolean {
-    return this.addedToCart().has(productId);
-  }
-
-  // ── Badge color helper
-  getBadgeClass(badge: string): string {
-    const map: Record<string, string> = {
-      'New':  'badge-new',
-      'Hot':  'badge-hot',
-      'Sale': 'badge-sale',
-    };
-    return map[badge] ?? '';
-  }
-
-  // ── Star rating helper
-  getStars(rating: number): string {
-    return '⭐'.repeat(Math.floor(rating));
-  }
+  // isAdded(productId: number): boolean {
+  //   return this.addedToCart().has(productId);
+  // }
 }

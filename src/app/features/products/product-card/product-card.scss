@@ -1,42 +1,104 @@
-.card {
-  border-radius: 12px;
+// ── Design tokens
+$plum:  #5E2D79;
+$coral: #FF6B6B;
+$sun:   #FFD166;
+$mint:  #6BCFB0;
+$sky:   #74C7EC;
+$cream: #FFF8F0;
+$dark:  #2B2B3B;
+$muted: #9B8FA0;
+$light: #EDE8F5;
+$white: #FFFFFF;
+
+.product-card {
+  background: $white;
+  border-radius: 24px;
   overflow: hidden;
-  background: white;
-  transition: 0.3s;
-  border: 1px solid #eee;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-}
-
-.card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
-.info {
-  padding: 10px;
-}
-
-.category {
-  color: gray;
-  font-size: 12px;
-}
-
-.price {
-  font-weight: bold;
-  margin: 5px 0;
-}
-
-button {
-  width: 100%;
-  padding: 8px;
-  background: #ff3f6c;
-  color: white;
-  border: none;
-  border-radius: 6px;
   cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  }
+
+  &__img {
+    height: 210px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  &__emoji {
+    font-size: 4.5rem;
+    z-index: 1;
+  }
+
+  &__wish {
+    position: absolute;
+    top: 12px; right: 12px;
+    background: $white;
+    border: none;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.15s;
+    z-index: 2;
+
+    &:hover { transform: scale(1.2); }
+  }
+
+  &__info {
+    padding: 16px 18px 20px;
+  }
+
+  &__cat {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: $muted;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  &__name {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: 1rem;
+    color: $dark;
+    margin-bottom: 6px;
+  }
+
+  &__rating {
+    font-size: 0.78rem;
+    color: $sun;
+    margin-bottom: 12px;
+  }
+
+  &__reviews {
+    color: $muted;
+    font-size: 0.75rem;
+    margin-left: 3px;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__price {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: $plum;
+  }
 }

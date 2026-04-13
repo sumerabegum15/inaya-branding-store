@@ -1,22 +1,172 @@
-<h2>Your Cart</h2>
-@if(items.length > 0){
-  <div class="cart-container">
-    @for (item of items; track $index) {
-      <div class="cart-item">
-        <div>
-          <h4>{{ item.name }}</h4>
-          <p>₹{{ item.price }} × {{ item.quantity }}</p>
+<div class="cart-page">
+
+  @if (cartService.items().length === 0) {
+    <div class="empty-cart">
+      <span class="empty-cart__icon">🛒</span>
+      <h2 class="empty-cart__title">Your cart is empty!</h2>
+      <p class="empty-cart__desc">Looks like you haven't added anything yet.</p>
+      <button class="btn btn--primary" (click)="goToShop()">
+        Start Shopping →
+      </button>
+    </div>
+  }
+
+  @if (cartService.items().length > 0) {
+    <div class="cart-header">
+      <h1 class="cart-header__title">Your Cart 🛒</h1>
+      <p class="cart-header__count">
+        {{ cartService.cartCount() }} item{{ cartService.cartCount() === 1 ? '' : 's' }}
+      </p>
+    </div>
+
+    <div class="cart-layout">
+
+      <!-- ── LEFT: Cart Items ── -->
+      <div class="cart-items">
+
+        @for (item of cartService.items(); track item.id) {
+          <div class="cart-item">
+
+            <!-- Product image -->
+            <div class="cart-item__img" [style.background]="item.bg">
+              <span>{{ item.emoji }}</span>
+            </div>
+
+            <!-- Product info -->
+            <div class="cart-item__info">
+              <span class="cart-item__cat">{{ item.category }}</span>
+              <h4 class="cart-item__name">{{ item.name }}</h4>
+              <p class="cart-item__price">${{ item.price.toFixed(2) }}</p>
+            </div>
+
+            <!-- Qty stepper -->
+            <div class="cart-item__stepper">
+              <button
+                class="stepper__btn stepper__btn--minus"
+                (click)="decrement(item.id)"
+                [attr.aria-label]="'Decrease quantity of ' + item.name">
+                −
+              </button>
+              <span class="stepper__value">{{ item.qty }}</span>
+              <button
+                class="stepper__btn stepper__btn--plus"
+                (click)="increment(item.id)"
+                [attr.aria-label]="'Increase quantity of ' + item.name">
+                +
+              </button>
+            </div>
+
+            <!-- Item total -->
+            <div class="cart-item__total">
+              ${{ itemTotal(item.price, item.qty).toFixed(2) }}
+            </div>
+
+            <!-- Remove button -->
+            <button
+              class="cart-item__remove"
+              (click)="remove(item.id)"
+              [attr.aria-label]="'Remove ' + item.name + ' from cart'">
+              ✕
+            </button>
+
+          </div>
+        }
+
+        <!-- Continue shopping link -->
+        <button class="link-btn" (click)="goToShop()">
+          ← Continue Shopping
+        </button>
+
+      </div>
+
+      <!-- ── RIGHT: Order Summary ── -->
+      <div class="order-summary">
+
+        <h3 class="order-summary__title">Order Summary</h3>
+
+        <!-- Promo code input -->
+        <div class="promo-section">
+          @if (!promoApplied()) {
+            <div class="promo-input-row">
+              <input
+                class="promo-input"
+                type="text"
+                placeholder="🏷️ Enter promo code"
+                [value]="promoInput()"
+                (input)="promoInput.set($any($event.target).value)"
+                (keyup.enter)="applyPromo()" />
+              <button class="btn btn--promo" (click)="applyPromo()">
+                Apply
+              </button>
+            </div>
+            @if (promoError()) {
+              <p class="promo-error">⚠️ {{ promoError() }}</p>
+            }
+          }
+
+          @if (promoApplied()) {
+            <div class="promo-applied">
+              <span>🎉 <strong>{{ promoApplied() }}</strong> applied!</span>
+              <button class="promo-remove" (click)="removePromo()">Remove</button>
+            </div>
+          }
         </div>
 
-        <button (click)="removeItem($index)">Remove</button>
-      </div>
-    }
+        <!-- Price breakdown -->
+        <div class="summary-rows">
 
-    <h3>Total: ₹{{ getTotal() }}</h3>
-  </div>
-} @else {
-  <div class="empty">
-    <p>Your cart is empty 🛍️</p>
-    <a routerLink="/home">Start Shopping</a>
-  </div>
-}
+          <div class="summary-row">
+            <span class="summary-row__label">Subtotal</span>
+            <span class="summary-row__value">${{ subtotal().toFixed(2) }}</span>
+          </div>
+
+          @if (promoApplied()) {
+            <div class="summary-row summary-row--discount">
+              <span class="summary-row__label">
+                Discount ({{ promoApplied() }})
+              </span>
+              <span class="summary-row__value">
+                −${{ discount().toFixed(2) }}
+              </span>
+            </div>
+          }
+
+          <div class="summary-row" [class.summary-row--free]="isFreeShipping()">
+            <span class="summary-row__label">Shipping</span>
+            <span class="summary-row__value">
+              @if (isFreeShipping()) { Free 🎉 }
+              @else { ${{ shipping().toFixed(2) }} }
+            </span>
+          </div>
+
+          @if (!isFreeShipping()) {
+            <p class="free-shipping-hint">
+              Add ${{ (50 - subtotal()).toFixed(2) }} more for free shipping!
+            </p>
+          }
+
+        </div>
+
+        <!-- Total -->
+        <div class="summary-total">
+          <span>Total</span>
+          <span class="summary-total__value">${{ total().toFixed(2) }}</span>
+        </div>
+
+        <!-- Checkout CTA -->
+        <button class="btn btn--checkout" (click)="goToCheckout()">
+          Proceed to Checkout →
+        </button>
+
+        <!-- Trust badges -->
+        <div class="trust-badges">
+          <span>🔒 Secure Checkout</span>
+          <span>↩️ Free Returns</span>
+          <span>🚚 Fast Delivery</span>
+        </div>
+
+      </div>
+    </div>
+  }
+
+</div>

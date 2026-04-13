@@ -107,46 +107,7 @@
 
     <div class="products__grid">
       @for (product of featuredProducts; track product.id) {
-        <div class="product-card" (click)="goTo('/shop')">
-
-          <!-- Image area -->
-          <div class="product-card__img" [style.background]="product.bg">
-
-            @if (product.badge) {
-              <span class="badge" [ngClass]="getBadgeClass(product.badge)">
-                {{ product.badge }}
-              </span>
-            }
-
-            <button
-              class="product-card__wish"
-              (click)="toggleWishlist(product.id, $event)">
-              {{ isWishlisted(product.id) ? '❤️' : '🤍' }}
-            </button>
-
-            <span class="product-card__emoji">{{ product.emoji }}</span>
-          </div>
-
-          <!-- Info -->
-          <div class="product-card__info">
-            <span class="product-card__cat">{{ product.category }}</span>
-            <h4 class="product-card__name">{{ product.name }}</h4>
-            <div class="product-card__rating">
-              <span>{{ getStars(product.rating) }}</span>
-              <span class="product-card__reviews">({{ product.reviews }})</span>
-            </div>
-            <div class="product-card__footer">
-              <span class="product-card__price">${{ product.price }}</span>
-              <button
-                class="btn btn--small"
-                [class.btn--added]="isAdded(product.id)"
-                (click)="addToCart(product, $event)">
-                {{ isAdded(product.id) ? '✓ Added!' : '+ Cart' }}
-              </button>
-            </div>
-          </div>
-
-        </div>
+        <app-product-card [product]="product"></app-product-card>
       }
     </div>
   </section>
