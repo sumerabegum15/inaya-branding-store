@@ -1,5 +1,13 @@
+<!-- ─────────────────────────────────────────
+  KiddiThread — Cart Page
+  Angular 17+ Standalone Component
+───────────────────────────────────────── -->
+
 <div class="cart-page">
 
+  <!-- ══════════════════════════════════
+    EMPTY CART STATE
+  ══════════════════════════════════ -->
   @if (cartService.items().length === 0) {
     <div class="empty-cart">
       <span class="empty-cart__icon">🛒</span>
@@ -11,6 +19,9 @@
     </div>
   }
 
+  <!-- ══════════════════════════════════
+    CART WITH ITEMS
+  ══════════════════════════════════ -->
   @if (cartService.items().length > 0) {
     <div class="cart-header">
       <h1 class="cart-header__title">Your Cart 🛒</h1>
@@ -29,14 +40,14 @@
 
             <!-- Product image -->
             <div class="cart-item__img" [style.background]="item.bg">
-              <span>{{ item.emoji }}</span>
+              <!-- <span>{{ item.emoji }}</span> -->
             </div>
 
             <!-- Product info -->
             <div class="cart-item__info">
               <span class="cart-item__cat">{{ item.category }}</span>
               <h4 class="cart-item__name">{{ item.name }}</h4>
-              <p class="cart-item__price">${{ item.price.toFixed(2) }}</p>
+              <p class="cart-item__price">₹{{ item.price.toFixed(2) }}</p>
             </div>
 
             <!-- Qty stepper -->
@@ -58,13 +69,13 @@
 
             <!-- Item total -->
             <div class="cart-item__total">
-              ${{ itemTotal(item.price, item.qty).toFixed(2) }}
+              ₹{{ itemTotal(item.price, item.qty).toFixed(2) }}
             </div>
 
             <!-- Remove button -->
             <button
               class="cart-item__remove"
-              (click)="remove(item.id)"
+              (click)="removeItem(item.id)"
               [attr.aria-label]="'Remove ' + item.name + ' from cart'">
               ✕
             </button>
@@ -117,7 +128,7 @@
 
           <div class="summary-row">
             <span class="summary-row__label">Subtotal</span>
-            <span class="summary-row__value">${{ subtotal().toFixed(2) }}</span>
+            <span class="summary-row__value">₹{{ subtotal().toFixed(2) }}</span>
           </div>
 
           @if (promoApplied()) {
@@ -126,7 +137,7 @@
                 Discount ({{ promoApplied() }})
               </span>
               <span class="summary-row__value">
-                −${{ discount().toFixed(2) }}
+                −₹{{ discount().toFixed(2) }}
               </span>
             </div>
           }
@@ -135,13 +146,13 @@
             <span class="summary-row__label">Shipping</span>
             <span class="summary-row__value">
               @if (isFreeShipping()) { Free 🎉 }
-              @else { ${{ shipping().toFixed(2) }} }
+              @else { ₹{{ shipping().toFixed(2) }} }
             </span>
           </div>
 
           @if (!isFreeShipping()) {
             <p class="free-shipping-hint">
-              Add ${{ (50 - subtotal()).toFixed(2) }} more for free shipping!
+              Add ₹{{ (50 - subtotal()).toFixed(2) }} more for free shipping!
             </p>
           }
 
@@ -150,7 +161,7 @@
         <!-- Total -->
         <div class="summary-total">
           <span>Total</span>
-          <span class="summary-total__value">${{ total().toFixed(2) }}</span>
+          <span class="summary-total__value">₹{{ total().toFixed(2) }}</span>
         </div>
 
         <!-- Checkout CTA -->

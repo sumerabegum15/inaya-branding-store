@@ -1,37 +1,65 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 import { Product } from '../models/product';
 import { BehaviorSubject } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class CartService {
+export interface CartItem extends Product {
+  qty: number;
+}
 
-  private cartItems = new BehaviorSubject<any[]>([]);
+@Injectable({ providedIn: 'root' })
+export class CartService {
+   private cartItems = new BehaviorSubject<any[]>([]);
 
   cartItems$ = this.cartItems.asObservable();
 
-  addToCart(product: Product) {
-    const current = this.cartItems.value;
+  // ── State
+  private _items = signal<CartItem[]>([]);
 
-    const existing = current.find(p => p.id === product.id);
+  // ── Public readable signal
+  items = this._items.asReadonly();
 
+  // ── Computed values
+  cartCount = computed(() =>
+    this._items().reduce((sum, item) => sum + item.qty, 0)
+  );
+
+  subtotal = computed(() =>
+    this._items().reduce((sum, item) => sum + item.price * item.qty, 0)
+  );
+
+  // ── Add to cart
+  addToCart(product: Product): void {
+    const existing = this._items().find(i => i.id === product.id);
     if (existing) {
-      existing.quantity! += 1;
-      this.cartItems.next([...current]);
+      this._items.update(items =>
+        items.map(i => i.id === product.id ? { ...i, qty: i.qty + 1 } : i)
+      );
     } else {
-      this.cartItems.next([...current, { ...product, quantity: 1 }]);
+      this._items.update(items => [...items, { ...product, qty: 1 }]);
     }
   }
 
-  getCartItems(): Product[] {
-    return this.cartItems.value;
+  // ── Update quantity
+  updateQty(productId: number, delta: number): void {
+    this._items.update(items =>
+      items
+        .map(i => i.id === productId ? { ...i, qty: i.qty + delta } : i)
+        .filter(i => i.qty > 0)  // auto-remove if qty reaches 0
+    );
   }
 
-  removeItem(index: number) {
-    const current = this.cartItems.value;   // get current array
-    current.splice(index, 1);               // remove item
-    this.cartItems.next([...current]);      // emit new value
+  // ── Remove item
+  removeItem(productId: number): void {
+    this._items.update(items => items.filter(i => i.id !== productId));
   }
-  
+
+  // ── Clear cart
+  clearCart(): void {
+    this._items.set([]);
+  }
+
+  // ── Check if product is in cart
+  isInCart(productId: number): boolean {
+    return this._items().some(i => i.id === productId);
+  }
 }
