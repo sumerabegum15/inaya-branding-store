@@ -1,79 +1,353 @@
-$plum: #5E2D79;
+// ─────────────────────────────────────────────────────────
+// KiddiThread — Navbar Styles
+// Place at: src/app/shared/navbar/navbar.component.scss
+// ─────────────────────────────────────────────────────────
+
+@use 'sass:color';
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700;800&display=swap');
+
+// ── Design tokens
+$plum:  #5E2D79;
 $coral: #FF6B6B;
-$sun: #FFD166;
-$dark: #2B2B3B;
+$sun:   #FFD166;
+$cream: #FFF8F0;
+$dark:  #2B2B3B;
+$muted: #9B8FA0;
+$light: #EDE8F5;
+$white: #FFFFFF;
 
-.nav {
-  background: rgba(255, 248, 240, 0.95);
-  backdrop-filter: blur(8px);
-  padding: 10px 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px dashed rgba(94, 45, 121, 0.15);
-  position: sticky;
-  top: 0;
-  z-index: 10;
+// ── Animations
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-  .logo {
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+@keyframes badgePop {
+  0%   { transform: scale(0.5); }
+  70%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+// ──────────────────────────────────────────────────────────
+// NAVBAR
+// ──────────────────────────────────────────────────────────
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba($cream, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 2px dashed rgba($plum, 0.1);
+  transition: box-shadow 0.25s;
+  animation: fadeDown 0.4s ease both;
+
+  // Shadow appears on scroll
+  &--scrolled {
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    border-bottom-color: transparent;
+  }
+
+  &__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 14px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  // ── Logo
+  &__logo {
     font-family: 'Baloo 2', cursive;
-    font-size: 13px;
+    font-size: 1.75rem;
     font-weight: 800;
     color: $plum;
+    text-decoration: none;
+    letter-spacing: -0.5px;
+    flex-shrink: 0;
+
+    .accent { color: $coral; }
+
+    &:hover { opacity: 0.85; }
+  }
+
+  // ── Desktop links
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    @media (max-width: 768px) { display: none; }
+  }
+
+  &__link {
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: $dark;
+    padding: 8px 14px;
+    border-radius: 50px;
+    transition: background 0.18s, color 0.18s;
+
+    &:hover {
+      background: $light;
+      color: $plum;
+    }
+
+    &--active {
+      background: $plum;
+      color: $white !important;
+
+      &:hover { background: color.adjust($plum, $lightness: -6%); }
+    }
+  }
+
+  // ── Desktop actions
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    @media (max-width: 768px) { display: none; }
+  }
+
+  // ── Cart button
+  &__cart {
+    position: relative;
+    background: $coral;
+    color: $white;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba($coral, 0.32);
+    transition: transform 0.18s, box-shadow 0.18s;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba($coral, 0.42);
+    }
+  }
+
+  // ── Cart badge
+  &__badge {
+    position: absolute;
+    top: -7px; right: -7px;
+    background: $sun;
+    color: $dark;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.68rem;
+    font-weight: 900;
+    animation: badgePop 0.3s ease both;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  // ── Profile button
+  &__profile {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: $light;
+    border: none;
+    font-size: 1.15rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.18s, transform 0.18s;
+
+    &:hover {
+      background: color.adjust($light, $lightness: -6%);
+      transform: scale(1.08);
+    }
+  }
+
+  // ── Hamburger (mobile only)
+  &__hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    transition: background 0.18s;
+
+    &:hover { background: $light; }
 
     span {
-      color: $coral;
+      display: block;
+      width: 24px;
+      height: 2.5px;
+      background: $dark;
+      border-radius: 2px;
+      transition: transform 0.25s, opacity 0.25s;
     }
+
+    // Animate to X when open
+    &--open {
+      span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+      span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+      span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+    }
+
+    @media (max-width: 768px) { display: flex; }
+  }
+}
+
+// ──────────────────────────────────────────────────────────
+// MOBILE MENU
+// ──────────────────────────────────────────────────────────
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+
+  // Semi-transparent backdrop
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba($dark, 0.45);
+    backdrop-filter: blur(3px);
+    animation: fadeDown 0.2s ease both;
   }
 
-  .icons {
+  // Slide-in drawer from right
+  &__drawer {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: min(320px, 85vw);
+    background: $white;
+    padding: 28px 24px;
     display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: -8px 0 32px rgba(0,0,0,0.12);
+    animation: slideIn 0.28s ease both;
+    overflow-y: auto;
+  }
+
+  // Drawer header
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  &__close {
+    background: $light;
+    border: none;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: $dark;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.18s;
+
+    &:hover { background: $coral; color: $white; }
+  }
+
+  // Mobile nav links
+  &__links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
     gap: 4px;
+    flex: 1;
+  }
 
-    .icon {
-      width: 26px;
-      height: 26px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      transition: 0.3s;
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    color: $dark;
+    padding: 12px 16px;
+    border-radius: 14px;
+    transition: background 0.18s, color 0.18s;
 
-      &.active {
-        background: $plum;
-        color: white;
-      }
+    &:hover {
+      background: $light;
+      color: $plum;
+    }
 
-      &:hover {
-        background: rgba(94, 45, 121, 0.1);
-      }
+    &--active {
+      background: $plum;
+      color: $white !important;
     }
   }
 
-  .cart {
-    background: $coral;
-    color: white;
-    font-size: 10px;
-    font-weight: 800;
-    padding: 5px 10px;
-    border-radius: 50px;
-    position: relative;
+  &__icon {
+    font-size: 1.2rem;
+    width: 28px;
+    text-align: center;
+  }
 
-    .badge {
-      position: absolute;
-      top: -5px;
-      right: -5px;
-      background: $sun;
-      color: $dark;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 8px;
-      font-weight: 900;
-    }
+  // Mobile action buttons
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 2px dashed rgba($plum, 0.1);
+  }
+}
+
+// ── Mobile action buttons
+.btn {
+  border: none;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  border-radius: 50px;
+  padding: 13px 20px;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  transition: transform 0.18s;
+
+  &--cart {
+    background: $coral;
+    color: $white;
+    box-shadow: 0 4px 16px rgba($coral, 0.3);
+
+    &:hover { transform: translateY(-2px); }
+  }
+
+  &--profile {
+    background: $light;
+    color: $plum;
+
+    &:hover { background: color.adjust($light, $lightness: -5%); }
   }
 }

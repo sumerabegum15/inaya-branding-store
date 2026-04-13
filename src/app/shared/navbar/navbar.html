@@ -1,25 +1,107 @@
-<div class="nav">
+<nav class="navbar" [class.navbar--scrolled]="isScrolled()">
+  <div class="navbar__inner">
 
-  <!-- Logo -->
-  <div class="logo">
-    Inaya <span>Branding Store</span>
+    <!-- ── Logo -->
+    <a class="navbar__logo" routerLink="/home" (click)="closeMenu()">
+      Inaya <span class="accent">Branding Store</span>
+    </a>
+
+    <!-- ── Desktop Nav Links -->
+    <ul class="navbar__links">
+      @for (link of navLinks; track link.route) {
+        <li>
+          <a
+            class="navbar__link"
+            [routerLink]="link.route"
+            routerLinkActive="navbar__link--active"
+            [routerLinkActiveOptions]="{ exact: false }">
+            {{ link.label }}
+          </a>
+        </li>
+      }
+    </ul>
+
+    <!-- ── Desktop Actions -->
+    <div class="navbar__actions">
+
+      <!-- Cart button with badge -->
+      <button class="navbar__cart" (click)="goToCart()">
+        🛒 Cart
+        @if (cartService.cartCount() > 0) {
+          <span class="navbar__badge">
+            {{ cartService.cartCount() }}
+          </span>
+        }
+      </button>
+
+      <!-- Profile button -->
+      <button class="navbar__profile" (click)="goToProfile()">
+        👤
+      </button>
+
+    </div>
+
+    <!-- ── Mobile hamburger -->
+    <button
+      class="navbar__hamburger"
+      [class.navbar__hamburger--open]="menuOpen()"
+      (click)="toggleMenu()"
+      aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
   </div>
+</nav>
 
-  <!-- Icons -->
-  <div class="icons">
-     @for (icon of ['🏠', '🛍️', '🎁', '📦']; let i = $index; track i) {
-      <div
-        class="icon"
-        [class.active]="i === activeIndex">
-        {{ icon }}
+<!-- ── Mobile Menu Overlay -->
+@if (menuOpen()) {
+  <div class="mobile-menu">
+
+    <!-- Close backdrop -->
+    <div class="mobile-menu__backdrop" (click)="closeMenu()"></div>
+
+    <!-- Drawer -->
+    <div class="mobile-menu__drawer">
+
+      <!-- Header -->
+      <div class="mobile-menu__header">
+        <span class="navbar__logo">
+          Kiddi<span class="accent">Thread</span>
+        </span>
+        <button class="mobile-menu__close" (click)="closeMenu()">✕</button>
       </div>
-     }
-  </div>
 
-  <!-- Cart -->
-  <div class="cart">
-    🛒
-    <span class="badge">{{ cartCount }}</span>
-  </div>
+      <!-- Links -->
+      <ul class="mobile-menu__links">
+        @for (link of navLinks; track link.route) {
+          <li>
+            <a
+              class="mobile-menu__link"
+              [routerLink]="link.route"
+              routerLinkActive="mobile-menu__link--active"
+              (click)="closeMenu()">
+              <span class="mobile-menu__icon">{{ link.icon }}</span>
+              {{ link.label }}
+            </a>
+          </li>
+        }
+      </ul>
 
-</div>
+      <!-- Mobile actions -->
+      <div class="mobile-menu__actions">
+        <button class="btn btn--cart" (click)="goToCart()">
+          🛒 Cart
+          @if (cartService.cartCount() > 0) {
+            <span class="navbar__badge">{{ cartService.cartCount() }}</span>
+          }
+        </button>
+        <button class="btn btn--profile" (click)="goToProfile()">
+          👤 Profile
+        </button>
+      </div>
+
+    </div>
+  </div>
+}
