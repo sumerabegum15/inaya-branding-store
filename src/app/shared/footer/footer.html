@@ -1,0 +1,49 @@
+<footer class="footer">
+    <div class="footer__grid">
+
+        <div class="footer__brand">
+            <span class="footer__logo">Inaya <span class="accent">Branding Store</span></span>
+            <p class="footer__tagline">
+                Playful, durable and adorable clothing for kids and the whole family.
+            </p>
+            <div class="footer__socials">
+                @for (s of ['📘','🐦','📸','▶️']; track s) {
+                <button class="footer__social-btn">{{ s }}</button>
+                }
+            </div>
+        </div>
+
+        <div class="footer__col">
+            <h5 class="footer__col-title">Shop</h5>
+            <ul>
+                @for (l of ['Kids Collection','Women','Men','New Arrivals','Sale']; track l) {
+                <li (click)="goTo('/shop')">{{ l }}</li>
+                }
+            </ul>
+        </div>
+
+        <div class="footer__col">
+            <h5 class="footer__col-title">Help</h5>
+            <ul>
+                @for (l of ['FAQ','Returns','Shipping','Contact Us','Track Order']; track l) {
+                <li (click)="goTo('/help')">{{ l }}</li>
+                }
+            </ul>
+        </div>
+
+        <div class="footer__col">
+            <h5 class="footer__col-title">Company</h5>
+            <ul>
+                @for (l of ['About Us','Careers','Blog','Privacy Policy','Terms']; track l) {
+                <li>{{ l }}</li>
+                }
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="footer__bottom">
+        <p>© 2026 Inaya Branding Store. All rights reserved.</p>
+        <p>Made with ❤️ for little adventurers</p>
+    </div>
+</footer>

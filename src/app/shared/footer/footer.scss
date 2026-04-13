@@ -1,0 +1,92 @@
+$white: #FFFFFF;
+$dark:  #2B2B3B;
+$coral: #FF6B6B;
+
+.footer {
+  background: $dark;
+  color: $white;
+  padding: 60px 6% 28px;
+  border-radius: 32px 32px 0 0;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+
+  &__logo {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.7rem;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 14px;
+
+    .accent { color: $coral; }
+  }
+
+  &__tagline {
+    color: rgba($white, 0.45);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    max-width: 240px;
+  }
+
+  &__socials {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  &__social-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba($white, 0.08);
+    border: none;
+    color: $white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+
+    &:hover { background: $coral; }
+  }
+
+  &__col-title {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: 1rem;
+    color: rgba($white, 0.7);
+    margin-bottom: 18px;
+  }
+
+  &__col ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      font-size: 0.88rem;
+      color: rgba($white, 0.42);
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: color 0.2s;
+
+      &:hover { color: $coral; }
+    }
+  }
+
+  &__bottom {
+    border-top: 1px solid rgba($white, 0.08);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    p {
+      font-size: 0.82rem;
+      color: rgba($white, 0.3);
+    }
+  }
+}
