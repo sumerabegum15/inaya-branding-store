@@ -1,0 +1,79 @@
+$plum: #5E2D79;
+$coral: #FF6B6B;
+$sun: #FFD166;
+$dark: #2B2B3B;
+
+.nav {
+  background: rgba(255, 248, 240, 0.95);
+  backdrop-filter: blur(8px);
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed rgba(94, 45, 121, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  .logo {
+    font-family: 'Baloo 2', cursive;
+    font-size: 13px;
+    font-weight: 800;
+    color: $plum;
+
+    span {
+      color: $coral;
+    }
+  }
+
+  .icons {
+    display: flex;
+    gap: 4px;
+
+    .icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      transition: 0.3s;
+
+      &.active {
+        background: $plum;
+        color: white;
+      }
+
+      &:hover {
+        background: rgba(94, 45, 121, 0.1);
+      }
+    }
+  }
+
+  .cart {
+    background: $coral;
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 5px 10px;
+    border-radius: 50px;
+    position: relative;
+
+    .badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: $sun;
+      color: $dark;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 900;
+    }
+  }
+}

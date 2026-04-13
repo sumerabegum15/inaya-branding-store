@@ -1,0 +1,25 @@
+<div class="nav">
+
+  <!-- Logo -->
+  <div class="logo">
+    Inaya <span>Branding Store</span>
+  </div>
+
+  <!-- Icons -->
+  <div class="icons">
+     @for (icon of ['🏠', '🛍️', '🎁', '📦']; let i = $index; track i) {
+      <div
+        class="icon"
+        [class.active]="i === activeIndex">
+        {{ icon }}
+      </div>
+     }
+  </div>
+
+  <!-- Cart -->
+  <div class="cart">
+    🛒
+    <span class="badge">{{ cartCount }}</span>
+  </div>
+
+</div>
