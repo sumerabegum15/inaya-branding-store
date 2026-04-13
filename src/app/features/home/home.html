@@ -1,0 +1,192 @@
+<!-- ─────────────────────────────────────────
+  Inaya Branding Store — Home Page
+  Angular 17+ Standalone Component
+───────────────────────────────────────── -->
+
+<div class="home">
+
+  <!-- ══════════════════════════════════════
+    HERO SECTION
+  ══════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero__blob hero__blob--1"></div>
+    <div class="hero__blob hero__blob--2"></div>
+
+    <div class="hero__content">
+
+      <span class="hero__badge">🆕 Spring Collection 2026</span>
+
+      <h1 class="hero__title">
+        Clothes That Let<br/>
+        <span class="hero__title-highlight">Kids Be Kids</span>
+      </h1>
+
+      <p class="hero__desc">
+        Playful, durable, and absolutely adorable clothing for kids —
+        plus great styles for the whole family. Built to survive adventures.
+      </p>
+
+      <div class="hero__actions">
+        <button class="btn btn--primary" (click)="goTo('/shop')">
+          Shop Now →
+        </button>
+        <button class="btn btn--outline" (click)="goTo('/offers')">
+          View Offers 🎁
+        </button>
+      </div>
+
+      <div class="hero__stats">
+        @for (stat of stats; track stat.label) {
+          <div class="hero__stat">
+            <span class="hero__stat-value">{{ stat.value }}</span>
+            <span class="hero__stat-label">{{ stat.label }}</span>
+          </div>
+        }
+      </div>
+
+    </div>
+
+    <!-- Hero visual card -->
+    <div class="hero__visual">
+      <div class="hero__card">
+        <div class="hero__card-img">🧒</div>
+        <div class="hero__card-info">
+          <div>
+            <p class="hero__card-name">Rainbow Hoodie</p>
+            <p class="hero__card-meta">Kids · Size 4–12y</p>
+          </div>
+          <div class="hero__card-right">
+            <p class="hero__card-price">$44.99</p>
+            <button class="btn btn--small" (click)="goTo('/shop')">
+              Shop →
+            </button>
+          </div>
+        </div>
+        <span class="hero__card-tag">⭐ Bestseller</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════
+    CATEGORIES
+  ══════════════════════════════════════ -->
+  <section class="section categories">
+    <div class="section__header">
+      <h2 class="section__title">Shop by Category</h2>
+      <p class="section__sub">Find the perfect fit for everyone in the family</p>
+    </div>
+
+    <div class="categories__grid">
+      @for (cat of categories; track cat.label) {
+        <div
+          class="cat-card"
+          [style.background]="cat.bg"
+          (click)="goTo(cat.route)">
+          <span class="cat-card__icon">{{ cat.emoji }}</span>
+          <h3 class="cat-card__label">{{ cat.label }}</h3>
+          <p class="cat-card__sub">{{ cat.sub }}</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+    FEATURED PRODUCTS
+  ══════════════════════════════════════ -->
+  <section class="section products">
+    <div class="section__header section__header--row">
+      <div>
+        <h2 class="section__title">Featured Products</h2>
+        <p class="section__sub">Handpicked favourites this season</p>
+      </div>
+      <button class="btn btn--ghost" (click)="goTo('/shop')">
+        View All →
+      </button>
+    </div>
+
+    <div class="products__grid">
+      @for (product of featuredProducts; track product.id) {
+        <div class="product-card" (click)="goTo('/shop')">
+
+          <!-- Image area -->
+          <div class="product-card__img" [style.background]="product.bg">
+
+            @if (product.badge) {
+              <span class="badge" [ngClass]="getBadgeClass(product.badge)">
+                {{ product.badge }}
+              </span>
+            }
+
+            <button
+              class="product-card__wish"
+              (click)="toggleWishlist(product.id, $event)">
+              {{ isWishlisted(product.id) ? '❤️' : '🤍' }}
+            </button>
+
+            <span class="product-card__emoji">{{ product.emoji }}</span>
+          </div>
+
+          <!-- Info -->
+          <div class="product-card__info">
+            <span class="product-card__cat">{{ product.category }}</span>
+            <h4 class="product-card__name">{{ product.name }}</h4>
+            <div class="product-card__rating">
+              <span>{{ getStars(product.rating) }}</span>
+              <span class="product-card__reviews">({{ product.reviews }})</span>
+            </div>
+            <div class="product-card__footer">
+              <span class="product-card__price">${{ product.price }}</span>
+              <button
+                class="btn btn--small"
+                [class.btn--added]="isAdded(product.id)"
+                (click)="addToCart(product, $event)">
+                {{ isAdded(product.id) ? '✓ Added!' : '+ Cart' }}
+              </button>
+            </div>
+          </div>
+
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+    PROMO BANNER
+  ══════════════════════════════════════ -->
+  <section class="section promo">
+    <div class="promo__card">
+      <div class="promo__blob">🌈</div>
+      <div class="promo__text">
+        <span class="promo__tag">Limited Time ⏰</span>
+        <h2 class="promo__title">Get 20% off your first order!</h2>
+        <p class="promo__desc">
+          Use code <strong class="promo__code">KIDDI20</strong> at checkout.
+          Valid until April 30.
+        </p>
+      </div>
+      <button class="btn btn--white" (click)="goTo('/shop')">
+        Shop Now →
+      </button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+    WHY Inaya Branding Store
+  ══════════════════════════════════════ -->
+  <section class="section why-us">
+    <h2 class="section__title" style="text-align:center; margin-bottom: 40px;">
+      Why Inaya Branding Store?
+    </h2>
+    <div class="why-us__grid">
+      @for (feature of features; track feature.title) {
+        <div class="feature-card">
+          <span class="feature-card__icon">{{ feature.icon }}</span>
+          <h4 class="feature-card__title">{{ feature.title }}</h4>
+          <p class="feature-card__desc">{{ feature.desc }}</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  

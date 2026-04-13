@@ -4,8 +4,8 @@ export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () =>
-      import('./features/products/product-list/product-list')
-        .then(m => m.ProductList)
+      import('./features/home/home')
+        .then(m => m.Home)
   },
   {
     path: 'cart',

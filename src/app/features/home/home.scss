@@ -1,0 +1,752 @@
+@use 'sass:color';
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700;800&display=swap');
+
+// ── Design tokens
+$plum:  #5E2D79;
+$coral: #FF6B6B;
+$sun:   #FFD166;
+$mint:  #6BCFB0;
+$sky:   #74C7EC;
+$cream: #FFF8F0;
+$dark:  #2B2B3B;
+$muted: #9B8FA0;
+$light: #EDE8F5;
+$white: #FFFFFF;
+
+// ── Animations
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatBob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes blobDrift {
+  0%, 100% { transform: scale(1) translate(0, 0); }
+  50%       { transform: scale(1.08) translate(10px, -10px); }
+}
+
+// ── Base
+.home {
+  font-family: 'Nunito', sans-serif;
+  color: $dark;
+  background: $cream;
+}
+
+// ── Reusable section wrapper
+.section {
+  padding: 80px 6%;
+
+  &__header {
+    text-align: center;
+    margin-bottom: 48px;
+
+    &--row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+      margin-bottom: 36px;
+    }
+  }
+
+  &__title {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 800;
+    color: $dark;
+    margin-bottom: 8px;
+  }
+
+  &__sub {
+    font-size: 1rem;
+    color: $muted;
+  }
+}
+
+// ── Reusable buttons
+.btn {
+  border: none;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  border-radius: 50px;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &--primary {
+    background: $coral;
+    color: $white;
+    padding: 15px 36px;
+    font-size: 1rem;
+    box-shadow: 0 8px 24px rgba($coral, 0.35);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba($coral, 0.45);
+    }
+  }
+
+  &--outline {
+    background: transparent;
+    color: $plum;
+    border: 2.5px solid $plum;
+    padding: 13px 32px;
+    font-size: 1rem;
+
+    &:hover {
+      background: $plum;
+      color: $white;
+    }
+  }
+
+  &--ghost {
+    background: $plum;
+    color: $white;
+    padding: 11px 26px;
+    font-size: 0.9rem;
+
+    &:hover { transform: translateY(-2px); }
+  }
+
+  &--small {
+    background: $coral;
+    color: $white;
+    padding: 8px 16px;
+    font-size: 0.82rem;
+
+    &:hover { transform: scale(1.05); }
+  }
+
+  &--added {
+    background: $mint !important;
+  }
+
+  &--white {
+    background: $white;
+    color: $plum;
+    padding: 15px 36px;
+    font-size: 1rem;
+    flex-shrink: 0;
+
+    &:hover { transform: scale(1.03); }
+  }
+}
+
+// ──────────────────────────────────────────────────────────
+// HERO
+// ──────────────────────────────────────────────────────────
+.hero {
+  min-height: 92vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 100px 6% 60px;
+  gap: 48px;
+  background: linear-gradient(135deg, $cream 60%, $light 100%);
+  position: relative;
+  overflow: hidden;
+
+  &__blob {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: blobDrift 8s ease-in-out infinite;
+
+    &--1 {
+      width: 520px; height: 520px;
+      top: -140px; right: -140px;
+      background: radial-gradient(circle, rgba($mint, 0.22), transparent 70%);
+    }
+    &--2 {
+      width: 380px; height: 380px;
+      bottom: -100px; left: -100px;
+      background: radial-gradient(circle, rgba($sun, 0.28), transparent 70%);
+      animation-delay: 3s;
+    }
+  }
+
+  &__content {
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  &__badge {
+    display: inline-block;
+    background: $sun;
+    color: $dark;
+    font-weight: 800;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(2.6rem, 4.5vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: $dark;
+    margin-bottom: 20px;
+
+    &-highlight {
+      color: $coral;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 4px; left: 0; right: 0;
+        height: 8px;
+        background: $sun;
+        border-radius: 4px;
+        z-index: -1;
+        opacity: 0.55;
+      }
+    }
+  }
+
+  &__desc {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: rgba($dark, 0.65);
+    max-width: 440px;
+    margin-bottom: 36px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 44px;
+  }
+
+  &__stats {
+    display: flex;
+    gap: 36px;
+  }
+
+  &__stat {
+    display: flex;
+    flex-direction: column;
+
+    &-value {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: $plum;
+    }
+
+    &-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: $muted;
+    }
+  }
+
+  // Hero visual card
+  &__visual {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    animation: fadeUp 0.7s 0.15s ease both;
+  }
+
+  &__card {
+    background: $white;
+    border-radius: 32px;
+    padding: 28px;
+    max-width: 360px;
+    width: 100%;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.1);
+    position: relative;
+  }
+
+  &__card-img {
+    width: 100%;
+    height: 280px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #FFD166, #FF6B6B, #6BCFB0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7rem;
+    margin-bottom: 20px;
+    animation: floatBob 3s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba($white, 0.25), transparent 60%);
+    }
+  }
+
+  &__card-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__card-name {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: $dark;
+  }
+
+  &__card-meta {
+    font-size: 0.82rem;
+    color: $muted;
+    margin-top: 2px;
+  }
+
+  &__card-right {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  &__card-price {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: $plum;
+    margin-bottom: 6px;
+  }
+
+  &__card-tag {
+    position: absolute;
+    top: -14px; right: 24px;
+    background: $mint;
+    color: $white;
+    font-weight: 800;
+    font-size: 0.72rem;
+    padding: 5px 14px;
+    border-radius: 50px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+}
+
+// ──────────────────────────────────────────────────────────
+// CATEGORIES
+// ──────────────────────────────────────────────────────────
+.categories {
+  background: $white;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+}
+
+.cat-card {
+  border-radius: 24px;
+  padding: 32px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+  }
+
+  &__icon {
+    display: block;
+    font-size: 2.8rem;
+    margin-bottom: 12px;
+  }
+
+  &__label {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: $white;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  &__sub {
+    font-size: 0.82rem;
+    color: rgba($white, 0.85);
+    margin-top: 4px;
+  }
+}
+
+// ──────────────────────────────────────────────────────────
+// PRODUCTS
+// ──────────────────────────────────────────────────────────
+.products {
+  background: $cream;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+}
+
+.product-card {
+  background: $white;
+  border-radius: 24px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  }
+
+  &__img {
+    height: 210px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  &__emoji {
+    font-size: 4.5rem;
+    z-index: 1;
+  }
+
+  &__wish {
+    position: absolute;
+    top: 12px; right: 12px;
+    background: $white;
+    border: none;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.15s;
+    z-index: 2;
+
+    &:hover { transform: scale(1.2); }
+  }
+
+  &__info {
+    padding: 16px 18px 20px;
+  }
+
+  &__cat {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: $muted;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  &__name {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: 1rem;
+    color: $dark;
+    margin-bottom: 6px;
+  }
+
+  &__rating {
+    font-size: 0.78rem;
+    color: $sun;
+    margin-bottom: 12px;
+  }
+
+  &__reviews {
+    color: $muted;
+    font-size: 0.75rem;
+    margin-left: 3px;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__price {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: $plum;
+  }
+}
+
+// ── Badges
+.badge {
+  position: absolute;
+  top: 12px; left: 12px;
+  font-weight: 800;
+  font-size: 0.68rem;
+  padding: 3px 10px;
+  border-radius: 50px;
+  color: $white;
+  z-index: 2;
+
+  &-new  { background: $mint; }
+  &-hot  { background: $coral; }
+  &-sale { background: $coral; }
+}
+
+// ──────────────────────────────────────────────────────────
+// PROMO BANNER
+// ──────────────────────────────────────────────────────────
+.promo {
+  padding-top: 0;
+
+  &__card {
+    background: $plum;
+    border-radius: 32px;
+    padding: 56px 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    position: relative;
+    overflow: hidden;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  &__blob {
+    position: absolute;
+    right: -20px; bottom: -30px;
+    font-size: 12rem;
+    opacity: 0.06;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  &__tag {
+    display: inline-block;
+    background: rgba($sun, 0.2);
+    color: $sun;
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 50px;
+    margin-bottom: 12px;
+  }
+
+  &__title {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+    font-weight: 800;
+    color: $white;
+    margin-bottom: 8px;
+  }
+
+  &__desc {
+    color: rgba($white, 0.72);
+    font-size: 1rem;
+    max-width: 480px;
+  }
+
+  &__code {
+    color: $sun;
+  }
+}
+
+// ──────────────────────────────────────────────────────────
+// WHY US
+// ──────────────────────────────────────────────────────────
+.why-us {
+  background: #FFFDF9;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+}
+
+.feature-card {
+  text-align: center;
+  padding: 32px 20px;
+  border-radius: 24px;
+  background: $white;
+  border: 2px solid rgba($plum, 0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.07);
+  }
+
+  &__icon {
+    display: block;
+    font-size: 2.4rem;
+    margin-bottom: 14px;
+  }
+
+  &__title {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: 1rem;
+    color: $plum;
+    margin-bottom: 8px;
+  }
+
+  &__desc {
+    font-size: 0.85rem;
+    color: $muted;
+    line-height: 1.65;
+  }
+}
+
+// ──────────────────────────────────────────────────────────
+// FOOTER
+// ──────────────────────────────────────────────────────────
+.footer {
+  background: $dark;
+  color: $white;
+  padding: 60px 6% 28px;
+  border-radius: 32px 32px 0 0;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+
+  &__logo {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.7rem;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 14px;
+
+    .accent { color: $coral; }
+  }
+
+  &__tagline {
+    color: rgba($white, 0.45);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    max-width: 240px;
+  }
+
+  &__socials {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  &__social-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba($white, 0.08);
+    border: none;
+    color: $white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+
+    &:hover { background: $coral; }
+  }
+
+  &__col-title {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: 1rem;
+    color: rgba($white, 0.7);
+    margin-bottom: 18px;
+  }
+
+  &__col ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      font-size: 0.88rem;
+      color: rgba($white, 0.42);
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: color 0.2s;
+
+      &:hover { color: $coral; }
+    }
+  }
+
+  &__bottom {
+    border-top: 1px solid rgba($white, 0.08);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    p {
+      font-size: 0.82rem;
+      color: rgba($white, 0.3);
+    }
+  }
+}
+
+// ──────────────────────────────────────────────────────────
+// RESPONSIVE
+// ──────────────────────────────────────────────────────────
+@media (max-width: 1024px) {
+  .products__grid { grid-template-columns: repeat(2, 1fr); }
+  .why-us__grid   { grid-template-columns: repeat(2, 1fr); }
+  .footer__grid   { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 90px;
+    text-align: center;
+
+    &__desc   { margin: 0 auto 32px; }
+    &__actions { justify-content: center; }
+    &__stats  { justify-content: center; }
+    &__visual { display: none; }
+  }
+
+  .categories__grid { grid-template-columns: repeat(2, 1fr); }
+  .products__grid   { grid-template-columns: 1fr; }
+  .why-us__grid     { grid-template-columns: repeat(2, 1fr); }
+  .footer__grid     { grid-template-columns: 1fr; gap: 32px; }
+
+  .footer__bottom {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .categories__grid { grid-template-columns: repeat(2, 1fr); }
+  .why-us__grid     { grid-template-columns: 1fr; }
+  .section          { padding: 48px 5%; }
+}
