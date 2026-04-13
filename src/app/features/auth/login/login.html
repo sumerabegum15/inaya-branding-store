@@ -1,0 +1,252 @@
+<div class="auth-wrapper">
+ 
+  <!-- Background blobs -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+ 
+  <!-- Card -->
+  <div class="auth-card">
+ 
+    <!-- ── Brand Logo -->
+    <div class="brand">
+      <span class="brand-icon">👗</span>
+      <h1 class="brand-name">Inaya <span class="accent">Branding Store</span></h1>
+      <p class="brand-tagline">Dress the Joy ✨</p>
+    </div>
+ 
+    <!-- ── Tab Toggle -->
+    <div class="tab-toggle">
+      <button
+        class="tab-btn"
+        [class.active]="isLogin"
+        (click)="switchTab('login')">
+        Sign In
+      </button>
+      <button
+        class="tab-btn"
+        [class.active]="!isLogin"
+        (click)="switchTab('signup')">
+        Sign Up
+      </button>
+    </div>
+ 
+    <!-- ── Success Message -->
+    @if (successMessage()) {
+      <div class="alert alert-success">
+        ✅ {{ successMessage() }}
+      </div>
+    }
+ 
+    <!-- ── Error Message -->
+    @if (errorMessage()) {
+      <div class="alert alert-error">
+        ⚠️ {{ errorMessage() }}
+      </div>
+    }
+ 
+    <!-- ════════════════════════════════
+      LOGIN FORM
+    ════════════════════════════════ -->
+    @if (isLogin) {
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" novalidate>
+ 
+        <!-- Email -->
+        <div class="field-group">
+          <label for="login-email">Email Address</label>
+          <div class="input-wrap" [class.input-error]="hasError(loginForm, 'email', 'required') || hasError(loginForm, 'email', 'email')">
+            <span class="input-icon">📧</span>
+            <input
+              id="login-email"
+              type="email"
+              formControlName="email"
+              placeholder="you@email.com"
+              autocomplete="email" />
+          </div>
+          @if (hasError(loginForm, 'email', 'required')) {
+            <span class="field-error">Email is required</span>
+          }
+          @if (hasError(loginForm, 'email', 'email')) {
+            <span class="field-error">Enter a valid email address</span>
+          }
+        </div>
+ 
+        <!-- Password -->
+        <div class="field-group">
+          <label for="login-password">Password</label>
+          <div class="input-wrap" [class.input-error]="hasError(loginForm, 'password', 'required') || hasError(loginForm, 'password', 'minlength')">
+            <span class="input-icon">🔒</span>
+            <input
+              id="login-password"
+              [type]="showPassword() ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="••••••••"
+              autocomplete="current-password" />
+            <button type="button" class="toggle-pw" (click)="showPassword.set(!showPassword())">
+              {{ showPassword() ? '🙈' : '👁️' }}
+            </button>
+          </div>
+          @if (hasError(loginForm, 'password', 'required')) {
+            <span class="field-error">Password is required</span>
+          }
+          @if (hasError(loginForm, 'password', 'minlength')) {
+            <span class="field-error">Password must be at least 6 characters</span>
+          }
+        </div>
+ 
+        <!-- Remember + Forgot -->
+        <div class="row-between">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="remember" />
+            <span>Remember me</span>
+          </label>
+          <button type="button" class="link-btn" (click)="onForgotPassword()">
+            Forgot password?
+          </button>
+        </div>
+ 
+        <!-- Submit -->
+        <button type="submit" class="btn-primary" [class.loading]="isLoading()" [disabled]="isLoading()">
+          @if (isLoading()) {
+            <span class="spinner"></span> Signing in...
+          } @else {
+            Sign In →
+          }
+        </button>
+ 
+      </form>
+    }
+ 
+    <!-- ════════════════════════════════
+      SIGNUP FORM
+    ════════════════════════════════ -->
+    @if (!isLogin) {
+      <form [formGroup]="signupForm" (ngSubmit)="onSignup()" novalidate>
+ 
+        <!-- Full Name -->
+        <div class="field-group">
+          <label for="signup-name">Full Name</label>
+          <div class="input-wrap" [class.input-error]="hasError(signupForm, 'name', 'required') || hasError(signupForm, 'name', 'minlength')">
+            <span class="input-icon">👤</span>
+            <input
+              id="signup-name"
+              type="text"
+              formControlName="name"
+              placeholder="Your full name"
+              autocomplete="name" />
+          </div>
+          @if (hasError(signupForm, 'name', 'required')) {
+            <span class="field-error">Name is required</span>
+          }
+          @if (hasError(signupForm, 'name', 'minlength')) {
+            <span class="field-error">Name must be at least 2 characters</span>
+          }
+        </div>
+ 
+        <!-- Email -->
+        <div class="field-group">
+          <label for="signup-email">Email Address</label>
+          <div class="input-wrap" [class.input-error]="hasError(signupForm, 'email', 'required') || hasError(signupForm, 'email', 'email')">
+            <span class="input-icon">📧</span>
+            <input
+              id="signup-email"
+              type="email"
+              formControlName="email"
+              placeholder="you@email.com"
+              autocomplete="email" />
+          </div>
+          @if (hasError(signupForm, 'email', 'required')) {
+            <span class="field-error">Email is required</span>
+          }
+          @if (hasError(signupForm, 'email', 'email')) {
+            <span class="field-error">Enter a valid email address</span>
+          }
+        </div>
+ 
+        <!-- Password -->
+        <div class="field-group">
+          <label for="signup-password">Password</label>
+          <div class="input-wrap" [class.input-error]="hasError(signupForm, 'password', 'required') || hasError(signupForm, 'password', 'minlength')">
+            <span class="input-icon">🔒</span>
+            <input
+              id="signup-password"
+              [type]="showPassword() ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="Min. 6 characters"
+              autocomplete="new-password" />
+            <button type="button" class="toggle-pw" (click)="showPassword.set(!showPassword())">
+              {{ showPassword() ? '🙈' : '👁️' }}
+            </button>
+          </div>
+          @if (hasError(signupForm, 'password', 'required')) {
+            <span class="field-error">Password is required</span>
+          }
+          @if (hasError(signupForm, 'password', 'minlength')) {
+            <span class="field-error">Password must be at least 6 characters</span>
+          }
+        </div>
+ 
+        <!-- Confirm Password -->
+        <div class="field-group">
+          <label for="signup-confirm">Confirm Password</label>
+          <div class="input-wrap" [class.input-error]="hasError(signupForm, 'confirm', 'required') || signupForm.hasError('mismatch') && signupForm.get('confirm')?.touched">
+            <span class="input-icon">🔐</span>
+            <input
+              id="signup-confirm"
+              [type]="showConfirm() ? 'text' : 'password'"
+              formControlName="confirm"
+              placeholder="Repeat your password"
+              autocomplete="new-password" />
+            <button type="button" class="toggle-pw" (click)="showConfirm.set(!showConfirm())">
+              {{ showConfirm() ? '🙈' : '👁️' }}
+            </button>
+          </div>
+          @if (hasError(signupForm, 'confirm', 'required')) {
+            <span class="field-error">Please confirm your password</span>
+          }
+          @if (signupForm.hasError('mismatch') && signupForm.get('confirm')?.touched) {
+            <span class="field-error">Passwords do not match</span>
+          }
+        </div>
+ 
+        <!-- Submit -->
+        <button type="submit" class="btn-primary" [class.loading]="isLoading()" [disabled]="isLoading()">
+          @if (isLoading()) {
+            <span class="spinner"></span> Creating account...
+          } @else {
+            Create Account →
+          }
+        </button>
+ 
+      </form>
+    }
+ 
+    <!-- ── Divider -->
+    <div class="divider">
+      <span>or continue with</span>
+    </div>
+ 
+    <!-- ── Social Buttons -->
+    <div class="social-row">
+      <button class="btn-social btn-google" (click)="onSocialLogin('google')">
+        <span class="social-icon">G</span> Google
+      </button>
+      <button class="btn-social btn-facebook" (click)="onSocialLogin('facebook')">
+        <span class="social-icon">f</span> Facebook
+      </button>
+    </div>
+ 
+    <!-- ── Switch tab link -->
+    <p class="switch-text">
+      @if (isLogin) {
+        Don't have an account?
+        <button type="button" class="link-btn bold" (click)="switchTab('signup')">Sign Up</button>
+      } @else {
+        Already have an account?
+        <button type="button" class="link-btn bold" (click)="switchTab('login')">Sign In</button>
+      }
+    </p>
+ 
+  </div><!-- /auth-card -->
+</div><!-- /auth-wrapper -->
+ 
