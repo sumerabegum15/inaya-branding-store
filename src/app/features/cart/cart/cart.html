@@ -13,7 +13,7 @@
       <span class="empty-cart__icon">🛒</span>
       <h2 class="empty-cart__title">Your cart is empty!</h2>
       <p class="empty-cart__desc">Looks like you haven't added anything yet.</p>
-      <button class="btn btn--primary" (click)="goToShop()">
+      <button class="btn btn--primary" (click)="goTo('/shop')">
         Start Shopping →
       </button>
     </div>
@@ -84,7 +84,7 @@
         }
 
         <!-- Continue shopping link -->
-        <button class="link-btn" (click)="goToShop()">
+        <button class="link-btn" (click)="goTo('/shop')">
           ← Continue Shopping
         </button>
 
@@ -165,7 +165,7 @@
         </div>
 
         <!-- Checkout CTA -->
-        <button class="btn btn--checkout" (click)="goToCheckout()">
+        <button class="btn btn--checkout" (click)="goTo('/checkout')">
           Proceed to Checkout →
         </button>
 

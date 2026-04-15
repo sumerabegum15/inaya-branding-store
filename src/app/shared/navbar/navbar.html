@@ -25,7 +25,7 @@
     <div class="navbar__actions">
 
       <!-- Cart button with badge -->
-      <button class="navbar__cart" (click)="goToCart()">
+      <button class="navbar__cart" (click)="goTo('/cart')">
         🛒 Cart
         @if (cartService.cartCount() > 0) {
           <span class="navbar__badge">
@@ -35,7 +35,7 @@
       </button>
 
       <!-- Profile button -->
-      <button class="navbar__profile" (click)="goToProfile()">
+      <button class="navbar__profile" (click)="goTo('/profile')">
         👤
       </button>
 
@@ -91,13 +91,13 @@
 
       <!-- Mobile actions -->
       <div class="mobile-menu__actions">
-        <button class="btn btn--cart" (click)="goToCart()">
+        <button class="btn btn--cart" (click)="goTo('/cart')">
           🛒 Cart
           @if (cartService.cartCount() > 0) {
             <span class="navbar__badge">{{ cartService.cartCount() }}</span>
           }
         </button>
-        <button class="btn btn--profile" (click)="goToProfile()">
+        <button class="btn btn--profile" (click)="goTo('/profile')">
           👤 Profile
         </button>
       </div>

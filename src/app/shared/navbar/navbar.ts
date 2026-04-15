@@ -56,14 +56,8 @@ export class Navbar {
   }
 
   // ── Navigate to cart
-  goToCart() {
+  goTo(path: string) {
     this.closeMenu();
-    this.router.navigate(['/cart']);
-  }
-
-  // ── Navigate to profile
-  goToProfile() {
-    this.closeMenu();
-    this.router.navigate(['/profile']);
+    this.router.navigate([path]);
   }
 }

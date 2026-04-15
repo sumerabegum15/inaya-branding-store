@@ -310,42 +310,6 @@ form {
   }
 }
 
-// ── Primary button
-.btn-primary {
-  width: 100%;
-  padding: 16px;
-  border-radius: 16px;
-  border: none;
-  background: $coral;
-  color: $white;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 800;
-  font-size: 1rem;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba($coral, 0.32);
-  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 4px;
-
-  &:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba($coral, 0.42);
-  }
-
-  &:active:not(:disabled) {
-    transform: translateY(0);
-  }
-
-  &:disabled,
-  &.loading {
-    opacity: 0.75;
-    cursor: not-allowed;
-    transform: none;
-  }
-}
 
 // ── Loading spinner
 .spinner {

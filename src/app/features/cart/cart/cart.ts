@@ -94,13 +94,8 @@ export class Cart {
   }
 
   // ── Navigate
-  goToShop() {
-    this.router.navigate(['/shop']);
-  }
-
-  goToCheckout() {
-    // TODO: wire up to checkout page / payment flow
-    this.router.navigate(['/checkout']);
+  goTo(path: string) {
+    this.router.navigate([path]);
   }
 
   // ── Helper: item subtotal
