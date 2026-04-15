@@ -40,6 +40,11 @@ export class ProductCard {
     this.router.navigate([path]);
   }
 
+  // ── Navigate to product detail (future)
+  goToProduct(productId: number) {
+    this.router.navigate(['/product', productId]);
+  }
+
   addToCart() {
     this.cartService.addToCart(this.product);
     this.isAdded = true;
