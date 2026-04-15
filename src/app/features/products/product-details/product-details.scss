@@ -1,0 +1,628 @@
+// ─────────────────────────────────────────────────────────
+// KiddiThread — Product Detail Styles
+// Place at: src/app/pages/product-detail/product-detail.component.scss
+// ─────────────────────────────────────────────────────────
+
+@use 'sass:color';
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700;800&display=swap');
+
+// ── Design tokens
+$plum:  #5E2D79;
+$coral: #FF6B6B;
+$sun:   #FFD166;
+$mint:  #6BCFB0;
+$cream: #FFF8F0;
+$dark:  #2B2B3B;
+$muted: #9B8FA0;
+$light: #EDE8F5;
+$white: #FFFFFF;
+
+// ── Animations
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes floatBob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-14px); }
+}
+@keyframes pop {
+  0%   { transform: scale(0.8); }
+  60%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+// ──────────────────────────────────────────────────────────
+// PAGE
+// ──────────────────────────────────────────────────────────
+.detail-page {
+  min-height: 100vh;
+  background: $cream;
+  padding: 100px 6% 80px;
+  font-family: 'Nunito', sans-serif;
+  animation: fadeUp 0.4s ease both;
+}
+
+// ──────────────────────────────────────────────────────────
+// NOT FOUND
+// ──────────────────────────────────────────────────────────
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 14px;
+  text-align: center;
+
+  &__icon  { font-size: 4rem; animation: floatBob 3s ease-in-out infinite; }
+  &__title { font-family: 'Baloo 2', cursive; font-size: 2rem; font-weight: 800; }
+  &__desc  { color: $muted; font-size: 1rem; }
+}
+
+// ──────────────────────────────────────────────────────────
+// BREADCRUMB
+// ──────────────────────────────────────────────────────────
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 28px;
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  &__link {
+    color: $plum;
+    cursor: pointer;
+    transition: color 0.2s;
+    &:hover { color: $coral; }
+  }
+
+  &__sep     { color: $muted; }
+  &__current { color: $muted; }
+}
+
+// ──────────────────────────────────────────────────────────
+// MAIN GRID
+// ──────────────────────────────────────────────────────────
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: start;
+  margin-bottom: 72px;
+}
+
+// ──────────────────────────────────────────────────────────
+// LEFT — IMAGE
+// ──────────────────────────────────────────────────────────
+.detail-image {
+  position: sticky;
+  top: 100px;
+
+  &__card {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.12);
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 25%, rgba($white, 0.25), transparent 60%);
+    }
+  }
+
+  &__emoji {
+    font-size: 9rem;
+    z-index: 1;
+    animation: floatBob 3.5s ease-in-out infinite;
+  }
+
+  &__wish {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: rgba($white, 0.9);
+    border: none;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 2;
+    transition: transform 0.15s;
+
+    &:hover { transform: scale(1.15); }
+  }
+
+  &__dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 18px;
+  }
+}
+
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba($plum, 0.2);
+  transition: background 0.2s, transform 0.2s;
+
+  &--active {
+    background: $plum;
+    transform: scale(1.3);
+  }
+}
+
+// ──────────────────────────────────────────────────────────
+// RIGHT — INFO
+// ──────────────────────────────────────────────────────────
+.detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  &__cat {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: $muted;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  &__name {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 800;
+    color: $dark;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  &__rating {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 16px;
+    font-size: 0.88rem;
+
+    .stars        { font-size: 0.9rem; }
+    .rating-value { font-weight: 800; color: $dark; }
+    .rating-sep   { color: $muted; }
+    .reviews      { color: $muted; font-weight: 600; }
+  }
+
+  &__price-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  &__price {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: $plum;
+  }
+
+  &__original {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: $muted;
+    text-decoration: line-through;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+}
+
+// ── Stock warning
+.stock-warning {
+  background: rgba($coral, 0.1);
+  color: $coral;
+  border: 1.5px solid rgba($coral, 0.25);
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  animation: pop 0.3s ease both;
+}
+
+// ── Divider
+.divider {
+  height: 1px;
+  background: rgba($plum, 0.08);
+  margin: 18px 0;
+}
+
+// ── Selector groups (size, color)
+.selector-group {
+  margin-bottom: 18px;
+
+  &__label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: $dark;
+    margin-bottom: 10px;
+  }
+}
+
+.selected-value {
+  color: $plum;
+  font-weight: 800;
+}
+
+// ── Size pills
+.size-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.size-pill {
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 2px solid #DDDDDD;
+  background: $white;
+  color: $dark;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.18s;
+
+  &:hover {
+    border-color: $plum;
+    color: $plum;
+  }
+
+  &--active {
+    background: $plum;
+    border-color: $plum;
+    color: $white;
+    box-shadow: 0 4px 12px rgba($plum, 0.25);
+  }
+}
+
+// ── Color dots
+.color-dots {
+  display: flex;
+  gap: 10px;
+}
+
+.color-dot {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+
+  &:hover { transform: scale(1.1); }
+
+  &--active {
+    border-color: $dark;
+    transform: scale(1.15);
+  }
+}
+
+// ── Qty stepper
+.qty-stepper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: $white;
+  border: 2px solid #EEEEEE;
+  border-radius: 50px;
+  padding: 6px 16px;
+
+  &__btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: $plum;
+    cursor: pointer;
+    width: 28px; height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.15s;
+
+    &:hover:not(:disabled) { background: $light; }
+    &:disabled { color: $muted; cursor: not-allowed; }
+  }
+
+  &__value {
+    font-weight: 800;
+    font-size: 1rem;
+    min-width: 20px;
+    text-align: center;
+    color: $dark;
+  }
+}
+
+// ── Trust row
+.trust-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+
+  span {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: $muted;
+  }
+}
+
+// ── Tabs
+.tabs {
+  &__header {
+    display: flex;
+    background: #F5F0EB;
+    border-radius: 14px;
+    padding: 4px;
+    gap: 4px;
+    margin-bottom: 0;
+  }
+
+  &__btn {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.88rem;
+    color: $muted;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &--active {
+      background: $plum;
+      color: $white;
+      box-shadow: 0 4px 12px rgba($plum, 0.25);
+    }
+  }
+
+  &__body {
+    background: $white;
+    border-radius: 0 0 16px 16px;
+    padding: 18px 20px;
+    border: 2px solid #F0EBF5;
+    border-top: none;
+    min-height: 80px;
+    animation: fadeUp 0.25s ease both;
+  }
+}
+
+.tab-desc {
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: rgba($dark, 0.75);
+}
+
+.tab-features {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $dark;
+  }
+
+  .check {
+    color: $mint;
+    font-weight: 900;
+    font-size: 1rem;
+  }
+}
+
+// ── Badges
+.badge {
+  position: absolute;
+  top: 14px; left: 14px;
+  font-weight: 800;
+  font-size: 0.72rem;
+  padding: 4px 12px;
+  border-radius: 50px;
+  color: $white;
+  z-index: 2;
+
+  &--new  { background: $mint; }
+  &--hot  { background: $coral; }
+  &--sale { background: $coral; }
+}
+
+// ── Buttons
+.btn {
+  border: none;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  border-radius: 50px;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.2s;
+
+  &--primary {
+    background: $coral;
+    color: $white;
+    padding: 14px 32px;
+    font-size: 1rem;
+    box-shadow: 0 8px 24px rgba($coral, 0.32);
+    &:hover { transform: translateY(-2px); }
+  }
+
+  &--addcart {
+    flex: 1;
+    padding: 15px 28px;
+    font-size: 1rem;
+    background: $coral;
+    color: $white;
+    box-shadow: 0 8px 24px rgba($coral, 0.32);
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba($coral, 0.42);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  &--added {
+    background: $mint !important;
+    animation: pop 0.3s ease both;
+    pointer-events: none;
+  }
+
+  &--wish {
+    width: 50px; height: 50px;
+    background: $white;
+    border: 2px solid #EEEEEE;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 0.2s, transform 0.15s;
+
+    &:hover {
+      border-color: $coral;
+      transform: scale(1.08);
+    }
+  }
+}
+
+// ──────────────────────────────────────────────────────────
+// RELATED PRODUCTS
+// ──────────────────────────────────────────────────────────
+.related {
+  padding-top: 48px;
+  border-top: 2px dashed rgba($plum, 0.1);
+
+  &__title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: $dark;
+    margin-bottom: 28px;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+}
+
+.related-card {
+  background: $white;
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 36px rgba(0,0,0,0.1);
+  }
+
+  &__img {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    position: relative;
+  }
+
+  &__info {
+    padding: 12px 14px 14px;
+  }
+
+  &__name {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: $dark;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__price {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: $plum;
+  }
+}
+
+// ──────────────────────────────────────────────────────────
+// RESPONSIVE
+// ──────────────────────────────────────────────────────────
+@media (max-width: 900px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .detail-image {
+    position: static;
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .related__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .detail-page       { padding: 90px 4% 60px; }
+  .detail-info__name { font-size: 1.8rem; }
+  .related__grid     { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+  .detail-info__actions {
+    flex-direction: column;
+
+    .btn--addcart { width: 100%; }
+    .btn--wish    { width: 100%; height: 48px; border-radius: 50px; }
+  }
+}

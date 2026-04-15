@@ -44,7 +44,7 @@ export class Home {
   // ── Why us features
   features = [
     { icon: '🧵', title: 'Premium Quality',  desc: 'Soft, durable fabrics safe for sensitive skin' },
-    { icon: '🚚', title: 'Fast Delivery',    desc: '2–3 day shipping on all orders over $50' },
+    { icon: '🚚', title: 'Fast Delivery',    desc: '2–3 day shipping on all orders over ₹50' },
     { icon: '↩️', title: 'Easy Returns',     desc: '30-day hassle-free return policy' },
     { icon: '💬', title: '24/7 Support',     desc: 'Always here whenever you need help' },
   ];
