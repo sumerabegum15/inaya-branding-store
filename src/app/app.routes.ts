@@ -14,6 +14,12 @@ export const routes: Routes = [
         .then(m => m.Cart)
   },
   {
+    path: 'shop',
+    loadComponent: () =>
+      import('./features/products/product-list/product-list')
+        .then(m => m.ProductList)
+  },
+  {
     path: 'login',
     loadComponent: () =>
       import('./features/auth/login/login')
