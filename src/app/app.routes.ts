@@ -20,6 +20,30 @@ export const routes: Routes = [
         .then(m => m.ProductList)
   },
   {
+    path: 'offers',
+    loadComponent: () =>
+      import('./features/offers/offers')
+        .then(m => m.Offers)
+  },
+  {
+    path: 'orders',
+    loadComponent: () =>
+      import('./features/orders/orders')
+        .then(m => m.Orders)
+  },
+  {
+    path: 'help',
+    loadComponent: () =>
+      import('./features/help-section/help-section')
+        .then(m => m.HelpSection)
+  },
+  {
+    path: 'profile',
+    loadComponent: () =>
+      import('./features/profile/profile')
+        .then(m => m.Profile)
+  },
+  {
     path: 'product/:id',
     loadComponent: () =>
       import('./features/products/product-details/product-details')

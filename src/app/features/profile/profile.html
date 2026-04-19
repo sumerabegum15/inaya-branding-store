@@ -1,0 +1,187 @@
+<!-- ─────────────────────────────────────────
+  KiddiThread — Profile Page
+───────────────────────────────────────── -->
+
+<div class="profile-page">
+  <div class="profile-layout">
+
+    <!-- ── Sidebar -->
+    <aside class="sidebar">
+
+      <!-- Avatar -->
+      <div class="sidebar__avatar">
+        <div class="sidebar__avatar-img">👤</div>
+        <h3 class="sidebar__name">Sarah Johnson</h3>
+        <p class="sidebar__email">sarah&#64;email.com</p>
+      </div>
+
+      <!-- Tabs -->
+      <nav class="sidebar__nav">
+        @for (tab of tabs; track tab.key) {
+          <button
+            class="sidebar__tab"
+            [class.sidebar__tab--active]="activeTab() === tab.key"
+            (click)="activeTab.set($any(tab.key))">
+            {{ tab.label }}
+          </button>
+        }
+        <button class="sidebar__tab sidebar__tab--signout" (click)="signOut()">
+          🚪 Sign Out
+        </button>
+      </nav>
+
+    </aside>
+
+    <!-- ── Content -->
+    <div class="profile-content">
+
+      <!-- ════════════════════════
+        MY PROFILE TAB
+      ════════════════════════ -->
+      @if (activeTab() === 'profile') {
+        <div class="content-card">
+          <h2 class="content-card__title">My Profile</h2>
+
+          <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" novalidate>
+
+            <div class="form-row">
+              <div class="field-group">
+                <label>First Name</label>
+                <input type="text" formControlName="firstName" />
+                @if (hasError('firstName','required')) {
+                  <span class="field-error">Required</span>
+                }
+              </div>
+              <div class="field-group">
+                <label>Last Name</label>
+                <input type="text" formControlName="lastName" />
+                @if (hasError('lastName','required')) {
+                  <span class="field-error">Required</span>
+                }
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field-group">
+                <label>Email Address</label>
+                <input type="email" formControlName="email" />
+                @if (hasError('email','required')) { <span class="field-error">Required</span> }
+                @if (hasError('email','email'))    { <span class="field-error">Invalid email</span> }
+              </div>
+              <div class="field-group">
+                <label>Phone Number</label>
+                <input type="tel" formControlName="phone" />
+              </div>
+            </div>
+
+            <div class="field-group" style="max-width: 260px;">
+              <label>Date of Birth</label>
+              <input type="date" formControlName="dob" />
+            </div>
+
+            <button type="submit" class="btn btn--save" [class.btn--saved]="saved()">
+              {{ saved() ? '✓ Saved!' : 'Save Changes' }}
+            </button>
+
+          </form>
+        </div>
+      }
+
+      <!-- ════════════════════════
+        ADDRESSES TAB
+      ════════════════════════ -->
+      @if (activeTab() === 'address') {
+        <div class="content-card">
+          <h2 class="content-card__title">Saved Addresses</h2>
+
+          <div class="address-list">
+            @for (addr of addresses; track addr.label; let i = $index) {
+              <div class="address-card" [class.address-card--default]="addr.isDefault">
+                <div class="address-card__top">
+                  <div>
+                    <span class="address-card__label">
+                      {{ addr.label }}
+                      @if (addr.isDefault) {
+                        <span class="default-badge">Default</span>
+                      }
+                    </span>
+                    <p class="address-card__text">{{ addr.address }}</p>
+                  </div>
+                  <div class="address-card__actions">
+                    <button class="link-btn">Edit</button>
+                    @if (!addr.isDefault) {
+                      <button class="link-btn link-btn--set" (click)="setDefault(i)">Set Default</button>
+                      <button class="link-btn link-btn--del">Delete</button>
+                    }
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+
+          <button class="btn btn--outline">+ Add New Address</button>
+        </div>
+      }
+
+      <!-- ════════════════════════
+        PAYMENT TAB
+      ════════════════════════ -->
+      @if (activeTab() === 'payment') {
+        <div class="content-card">
+          <h2 class="content-card__title">Payment Methods</h2>
+
+          <div class="card-list">
+            @for (card of cards; track card.last) {
+              <div class="payment-card">
+                <div class="payment-card__type">{{ card.type }}</div>
+                <div class="payment-card__info">
+                  <span class="payment-card__number">•••• •••• •••• {{ card.last }}</span>
+                  <span class="payment-card__expiry">Expires {{ card.expiry }}</span>
+                </div>
+                <button class="link-btn link-btn--del">Remove</button>
+              </div>
+            }
+          </div>
+
+          <button class="btn btn--outline">+ Add Payment Method</button>
+        </div>
+      }
+
+      <!-- ════════════════════════
+        WISHLIST TAB
+      ════════════════════════ -->
+      @if (activeTab() === 'wishlist') {
+        <div class="content-card">
+          <h2 class="content-card__title">My Wishlist ❤️</h2>
+
+          @if (wishlistItems.length === 0) {
+            <div class="empty-wish">
+              <span>🤍</span>
+              <p>Your wishlist is empty.</p>
+            </div>
+          }
+
+          <div class="wishlist-grid">
+            @for (item of wishlistItems; track item.id) {
+              <div class="wish-card">
+                <div class="wish-card__img" [style.background]="item.bg" (click)="goToProduct(item.id)">
+                  <span>{{ item.emoji }}</span>
+                  <button class="wish-card__remove" (click)="removeWishlist(item.id)">✕</button>
+                </div>
+                <div class="wish-card__info">
+                  <p class="wish-card__name">{{ item.name }}</p>
+                  <div class="wish-card__footer">
+                    <span class="wish-card__price">${{ item.price.toFixed(2) }}</span>
+                    <button class="btn btn--small" (click)="goToProduct(item.id)">View</button>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+
+        </div>
+      }
+
+    </div>
+  </div>
+</div>
