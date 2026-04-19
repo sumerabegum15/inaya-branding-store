@@ -1,18 +1,5 @@
 @use '../../../../src/styles/_variables.scss' as *;
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes floatBob {
-  0%,100% { transform: translateY(0); }
-  50%     { transform: translateY(-12px); }
-}
-
 .orders-page {
   min-height: 100vh;
   background: $cream;
@@ -208,10 +195,3 @@
   flex-wrap: wrap;
 }
 
-@media (max-width: 640px) {
-  .orders-page    { padding: 90px 4% 60px; }
-  .order-card     { padding: 16px; }
-  .order-card__header { flex-wrap: wrap; }
-  .tracker-step__label { font-size: 0.55rem; width: 48px; }
-  .tracker-step__dot   { width: 22px; height: 22px; font-size: 0.6rem; }
-}

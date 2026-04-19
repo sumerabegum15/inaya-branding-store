@@ -1,9 +1,5 @@
 @use '../../../../src/styles/_variables.scss' as *;
 
-@keyframes fadeUp   { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
-@keyframes slideDown{ from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
-@keyframes floatBob { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-10px); } }
-
 .help-page {
   min-height: 100vh;
   background: $cream;
@@ -212,9 +208,4 @@
   &__icon  { font-size: 4rem; animation: floatBob 3s ease-in-out infinite; }
   &__title { font-family:'Baloo 2',cursive; font-size:1.8rem; font-weight:800; }
   &__desc  { color: $muted; }
-}
-
-@media (max-width: 640px) {
-  .help-page      { padding: 90px 4% 60px; }
-  .channels-grid  { grid-template-columns: 1fr; }
 }

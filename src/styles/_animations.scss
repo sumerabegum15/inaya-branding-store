@@ -1,0 +1,64 @@
+// ───────────────────────────────
+// ANIMATIONS (CLEANED)
+// ───────────────────────────────
+
+// Fade Up (final consistent version)
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// Fade Down
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// Slide Down (same as fadeDown but keeping if used separately)
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// Slide In (horizontal)
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+// Floating animation (normalized)
+@keyframes floatBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+
+// Spin
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// Blob pulse
+@keyframes blobPulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50%      { transform: scale(1.1); opacity: 0.8; }
+}
+
+// Blob drift
+@keyframes blobDrift {
+  0%, 100% { transform: scale(1) translate(0, 0); }
+  50%      { transform: scale(1.08) translate(10px, -10px); }
+}
+
+// Pop (merged best version)
+@keyframes pop {
+  0%   { transform: scale(0.85); }
+  60%  { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+// Badge pop (kept separate since timing differs)
+@keyframes badgePop {
+  0%   { transform: scale(0.5); }
+  70%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}

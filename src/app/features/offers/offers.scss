@@ -1,20 +1,5 @@
 @use '../../../../src/styles/_variables.scss' as *;
 
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes floatBob {
-  0%,100% { transform: translateY(0); }
-  50%     { transform: translateY(-10px); }
-}
-@keyframes pop {
-  0%  { transform: scale(0.85); }
-  60% { transform: scale(1.1); }
-  100%{ transform: scale(1); }
-}
-
 .offers-page {
   min-height: 100vh;
   background: $cream;
@@ -209,12 +194,4 @@
 
     strong { color: $white; }
   }
-}
-
-@media (max-width: 900px) {
-  .offers-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 560px) {
-  .offers-page  { padding: 90px 4% 60px; }
-  .offers-grid  { grid-template-columns: 1fr; }
 }

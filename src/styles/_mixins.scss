@@ -1,0 +1,189 @@
+// ─────────────────────────────────────────
+// VARIABLES
+// ─────────────────────────────────────────
+$bp-xl: 1100px;
+$bp-lg: 1024px;
+$bp-md: 900px;
+$bp-sm: 768px;
+$bp-xs: 640px;
+$bp-xxs: 600px;
+$bp-mobile: 560px;
+$bp-mini: 480px;
+
+// reusable padding
+$page-padding: 90px 4% 60px;
+
+// ─────────────────────────────────────────
+// MIXIN
+// ─────────────────────────────────────────
+@mixin respond($breakpoint) {
+  @media (max-width: $breakpoint) {
+    @content;
+  }
+}
+
+// ─────────────────────────────────────────
+// RESPONSIVE
+// ─────────────────────────────────────────
+
+// 1100px
+@include respond($bp-xl) {
+  .products-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+// 1024px
+@include respond($bp-lg) {
+  .products__grid { grid-template-columns: repeat(2, 1fr); }
+  .why-us__grid   { grid-template-columns: repeat(2, 1fr); }
+  .footer__grid   { grid-template-columns: 1fr 1fr; }
+}
+
+// 900px (merged all)
+@include respond($bp-md) {
+  .cart-layout { grid-template-columns: 1fr; }
+  .order-summary { position: static; }
+
+  .offers-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .detail-image {
+    position: static;
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .related__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+// 860px
+@include respond(860px) {
+  .profile-layout { grid-template-columns: 1fr; }
+
+  .sidebar {
+    position: static;
+
+    &__nav { flex-direction: row; flex-wrap: wrap; }
+    &__tab { flex: 1; min-width: 120px; text-align: center; }
+    &__tab--signout { width: 100%; }
+  }
+}
+
+// 768px (merged)
+@include respond($bp-sm) {
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
+  .sort-select { margin-left: 0; }
+  .filters { gap: 10px; }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 90px;
+    text-align: center;
+
+    &__desc { margin: 0 auto 32px; }
+    &__actions,
+    &__stats { justify-content: center; }
+    &__visual { display: none; }
+  }
+
+  .categories__grid { grid-template-columns: repeat(2, 1fr); }
+  .products__grid { grid-template-columns: 1fr; }
+  .why-us__grid { grid-template-columns: repeat(2, 1fr); }
+
+  .footer__grid { grid-template-columns: 1fr; gap: 32px; }
+
+  .footer__bottom {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+}
+
+// 640px (merged)
+@include respond($bp-xs) {
+  .orders-page,
+  .help-page {
+    padding: $page-padding;
+  }
+
+  .order-card { padding: 16px; }
+  .order-card__header { flex-wrap: wrap; }
+
+  .tracker-step {
+    &__label { font-size: 0.55rem; width: 48px; }
+    &__dot { width: 22px; height: 22px; font-size: 0.6rem; }
+  }
+
+  .channels-grid { grid-template-columns: 1fr; }
+}
+
+// 600px
+@include respond($bp-xxs) {
+  .cart-page { padding: $page-padding; }
+
+  .cart-item {
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 16px;
+
+    &__total { margin-left: auto; }
+    &__remove { margin-left: 4px; }
+  }
+
+  .cart-header__title { font-size: 1.8rem; }
+}
+
+// 560px
+@include respond($bp-mobile) {
+  .offers-page { padding: $page-padding; }
+  .offers-grid { grid-template-columns: 1fr; }
+}
+
+// 480px (merged ALL)
+@include respond($bp-mini) {
+  .shop-page,
+  .profile-page,
+  .detail-page {
+    padding: $page-padding;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .search-wrap { min-width: 100%; }
+
+  .categories__grid { grid-template-columns: repeat(2, 1fr); }
+  .why-us__grid { grid-template-columns: 1fr; }
+
+  .section { padding: 48px 5%; }
+
+  .content-card { padding: 24px 18px; }
+  .wishlist-grid { grid-template-columns: 1fr; }
+
+  .detail-info__name { font-size: 1.8rem; }
+
+  .related__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .detail-info__actions {
+    flex-direction: column;
+
+    .btn--addcart,
+    .btn--wish {
+      width: 100%;
+    }
+
+    .btn--wish {
+      height: 48px;
+      border-radius: 50px;
+    }
+  }
+}
