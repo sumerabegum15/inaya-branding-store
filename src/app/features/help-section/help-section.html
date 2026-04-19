@@ -1,0 +1,118 @@
+<!-- ─────────────────────────────────────────
+  KiddiThread — Help Page
+───────────────────────────────────────── -->
+
+<div class="help-page">
+
+  <!-- ── Header -->
+  <div class="help-header">
+    <span class="help-header__icon">💬</span>
+    <h1 class="help-header__title">Help Center</h1>
+    <p class="help-header__sub">How can we help you today?</p>
+  </div>
+
+  <!-- ── Contact channels -->
+  <div class="channels-grid">
+    @for (ch of contactChannels; track ch.title) {
+      <div class="channel-card">
+        <div class="channel-card__icon-wrap" [style.background]="ch.color + '20'">
+          <span>{{ ch.icon }}</span>
+        </div>
+        <h4 class="channel-card__title" [style.color]="ch.color">{{ ch.title }}</h4>
+        <p class="channel-card__desc">{{ ch.desc }}</p>
+        <p class="channel-card__sub">{{ ch.sub }}</p>
+      </div>
+    }
+  </div>
+
+  <!-- ── Tab toggle -->
+  <div class="tab-toggle">
+    <button class="tab-btn" [class.tab-btn--active]="activeTab() === 'faq'"     (click)="activeTab.set('faq')">FAQs</button>
+    <button class="tab-btn" [class.tab-btn--active]="activeTab() === 'contact'" (click)="activeTab.set('contact')">Contact Us</button>
+  </div>
+
+  <!-- ══════════════════════════════════
+    FAQ TAB
+  ══════════════════════════════════ -->
+  @if (activeTab() === 'faq') {
+    <div class="faq-list">
+      @for (faq of faqs; track faq.q; let i = $index) {
+        <div class="faq-item" [class.faq-item--open]="isFaqOpen(i)">
+          <button class="faq-item__question" (click)="toggleFaq(i)">
+            <span>{{ faq.q }}</span>
+            <span class="faq-item__icon" [class.faq-item__icon--open]="isFaqOpen(i)">+</span>
+          </button>
+          @if (isFaqOpen(i)) {
+            <div class="faq-item__answer">{{ faq.a }}</div>
+          }
+        </div>
+      }
+    </div>
+  }
+
+  <!-- ══════════════════════════════════
+    CONTACT TAB
+  ══════════════════════════════════ -->
+  @if (activeTab() === 'contact') {
+    <div class="contact-wrap">
+
+      @if (formSent()) {
+        <!-- Success state -->
+        <div class="form-success">
+          <span class="form-success__icon">✅</span>
+          <h3 class="form-success__title">Message Sent!</h3>
+          <p class="form-success__desc">We'll get back to you within 24 hours.</p>
+          <button class="btn btn--primary" (click)="resetForm()">Send Another</button>
+        </div>
+      }
+
+      @if (!formSent()) {
+        <div class="contact-card">
+          <h3 class="contact-card__title">Send us a message</h3>
+
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
+
+            <div class="form-row">
+              <div class="field-group">
+                <label>Your Name</label>
+                <input type="text" formControlName="name" placeholder="John Doe" />
+                @if (hasError('name','required'))  { <span class="field-error">Name is required</span> }
+                @if (hasError('name','minlength')) { <span class="field-error">Name too short</span> }
+              </div>
+              <div class="field-group">
+                <label>Email Address</label>
+                <input type="email" formControlName="email" placeholder="you@email.com" />
+                @if (hasError('email','required')) { <span class="field-error">Email is required</span> }
+                @if (hasError('email','email'))    { <span class="field-error">Enter a valid email</span> }
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label>Subject</label>
+              <select formControlName="subject">
+                <option value="">Select a topic...</option>
+                <option value="order">Order Issue</option>
+                <option value="return">Return / Refund</option>
+                <option value="product">Product Question</option>
+                <option value="shipping">Shipping</option>
+                <option value="other">Other</option>
+              </select>
+              @if (hasError('subject','required')) { <span class="field-error">Please select a subject</span> }
+            </div>
+
+            <div class="field-group">
+              <label>Message</label>
+              <textarea formControlName="message" rows="5" placeholder="Describe your issue or question..."></textarea>
+              @if (hasError('message','required'))  { <span class="field-error">Message is required</span> }
+              @if (hasError('message','minlength')) { <span class="field-error">Message too short (min 10 characters)</span> }
+            </div>
+
+            <button type="submit" class="btn btn--primary">Send Message →</button>
+
+          </form>
+        </div>
+      }
+    </div>
+  }
+
+</div>
