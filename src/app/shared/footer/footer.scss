@@ -1,6 +1,4 @@
-$white: #FFFFFF;
-$dark:  #2B2B3B;
-$coral: #FF6B6B;
+@use '../../../styles/variables' as *;
 
 .footer {
   background: $dark;

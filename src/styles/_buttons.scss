@@ -1,0 +1,136 @@
+@use './variables' as *;
+
+.btn {
+    border: none;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    border-radius: 50px;
+    transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    &--primary {
+        background: $coral;
+        color: $white;
+        padding: 15px 36px;
+        font-size: 1rem;
+        box-shadow: 0 8px 24px rgba($coral, 0.35);
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba($coral, 0.45);
+        }
+    }
+
+    &--outline {
+        background: transparent;
+        color: $plum;
+        border: 2.5px solid $plum;
+        padding: 13px 32px;
+        font-size: 1rem;
+
+        &:hover {
+            background: $plum;
+            color: $white;
+        }
+    }
+
+    &--ghost {
+        background: $plum;
+        color: $white;
+        padding: 11px 26px;
+        font-size: 0.9rem;
+
+        &:hover {
+            transform: translateY(-2px);
+        }
+    }
+
+    &--small {
+        background: $coral;
+        color: $white;
+        padding: 8px 16px;
+        font-size: 0.82rem;
+
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
+
+    &--addcart {
+        flex: 1;
+        padding: 15px 28px;
+        font-size: 1rem;
+        background: $coral;
+        color: $white;
+        box-shadow: 0 8px 24px rgba($coral, 0.32);
+
+        &:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba($coral, 0.42);
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    }
+
+    &--added {
+        background: $mint !important;
+        animation: pop 0.3s ease both;
+        pointer-events: none;
+    }
+
+    &--wish {
+        width: 50px;
+        height: 50px;
+        background: $white;
+        border: 2px solid #EEEEEE;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: border-color 0.2s, transform 0.15s;
+
+        &:hover {
+            border-color: $coral;
+            transform: scale(1.08);
+        }
+    }
+
+    &--white {
+        background: $white;
+        color: $plum;
+        padding: 15px 36px;
+        font-size: 1rem;
+        flex-shrink: 0;
+
+        &:hover {
+            transform: scale(1.03);
+        }
+    }
+
+    &--save {
+        background: $coral;
+        color: $white;
+        padding: 14px 36px;
+        font-size: 1rem;
+        box-shadow: 0 8px 22px rgba($coral, 0.3);
+        margin-top: 8px;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba($coral, 0.4);
+        }
+    }
+
+    &--saved {
+        background: $mint !important;
+        animation: pop 0.3s ease;
+        pointer-events: none;
+    }
+}

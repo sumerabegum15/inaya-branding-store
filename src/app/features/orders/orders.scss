@@ -1,4 +1,4 @@
-@import url('../../../../src/styles/_variables.scss');
+@use '../../../../src/styles/_variables.scss' as *;
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }
@@ -206,25 +206,6 @@
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-}
-
-.btn {
-  border: none;
-  cursor: pointer;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 800;
-  border-radius: 50px;
-  font-size: 0.82rem;
-  padding: 9px 18px;
-  transition: transform 0.15s, opacity 0.15s;
-
-  &:hover { transform: translateY(-1px); opacity: 0.88; }
-
-  &--primary  { background: $coral; color: $white; box-shadow: 0 4px 14px rgba($coral, 0.3); }
-  &--track    { background: $plum;  color: $white; }
-  &--invoice  { background: $light; color: $plum; }
-  &--return   { background: rgba($coral, 0.12); color: $coral; }
-  &--cancel   { background: rgba($muted, 0.12); color: $muted; }
 }
 
 @media (max-width: 640px) {

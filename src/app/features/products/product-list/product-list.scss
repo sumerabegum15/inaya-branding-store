@@ -1,16 +1,5 @@
 @use 'sass:color';
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700;800&display=swap');
-
-// ── Design tokens
-$plum:  #5E2D79;
-$coral: #FF6B6B;
-$sun:   #FFD166;
-$mint:  #6BCFB0;
-$cream: #FFF8F0;
-$dark:  #2B2B3B;
-$muted: #9B8FA0;
-$light: #EDE8F5;
-$white: #FFFFFF;
+@use '../../../../styles/variables' as *;
 
 // ── Animations
 @keyframes fadeUp {
