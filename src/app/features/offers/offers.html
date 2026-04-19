@@ -1,0 +1,62 @@
+<!-- ─────────────────────────────────────────
+  KiddiThread — Offers Page
+───────────────────────────────────────── -->
+
+<div class="offers-page">
+
+  <!-- ── Hero banner -->
+  <div class="offers-hero">
+    <div class="offers-hero__blob"></div>
+    <span class="offers-hero__icon">🎁</span>
+    <h1 class="offers-hero__title">Exclusive Offers</h1>
+    <p class="offers-hero__sub">Copy a code and use it at checkout to save!</p>
+  </div>
+
+  <!-- ── Offer cards grid -->
+  <div class="offers-grid">
+    @for (offer of offers; track offer.code) {
+      <div class="offer-card" [style.border-color]="offer.color + '33'">
+
+        <!-- Decorative background emoji -->
+        <span class="offer-card__bg-emoji">{{ offer.emoji }}</span>
+
+        <!-- Top tag -->
+        <div class="offer-card__tag" [style.background]="offer.color + '20'" [style.color]="offer.color">
+          {{ offer.emoji }} Limited Offer
+        </div>
+
+        <!-- Discount -->
+        <div class="offer-card__discount" [style.color]="offer.color">
+          {{ offer.discount }}
+        </div>
+
+        <p class="offer-card__desc">{{ offer.desc }}</p>
+        <p class="offer-card__expiry">🗓️ Expires: {{ offer.expiry }}</p>
+
+        <!-- Code + copy -->
+        <div class="offer-card__code-row">
+          <div class="offer-card__code">{{ offer.code }}</div>
+          <button
+            class="offer-card__copy-btn"
+            [style.background]="offer.color"
+            [style.color]="offer.textColor || '#fff'"
+            (click)="copyCode(offer.code)">
+            {{ isCopied(offer.code) ? '✓ Copied!' : 'Copy' }}
+          </button>
+        </div>
+
+      </div>
+    }
+  </div>
+
+  <!-- ── Flash sale banner -->
+  <div class="flash-banner">
+    <div class="flash-banner__text">
+      <span class="flash-banner__tag">⚡ Flash Sale</span>
+      <h2 class="flash-banner__title">30% off all kids collection — today only!</h2>
+      <p class="flash-banner__sub">Use code <strong>SUMMER30</strong> at checkout.</p>
+    </div>
+    <button class="btn btn--white" (click)="goToShop()">Shop Flash Sale →</button>
+  </div>
+
+</div>

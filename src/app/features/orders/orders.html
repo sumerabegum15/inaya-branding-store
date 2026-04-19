@@ -1,0 +1,97 @@
+<!-- ─────────────────────────────────────────
+  KiddiThread — Orders Page
+───────────────────────────────────────── -->
+
+<div class="orders-page">
+
+  <div class="orders-header">
+    <h1 class="orders-header__title">My Orders 📦</h1>
+    <p class="orders-header__sub">Track and manage your recent orders</p>
+  </div>
+
+  <!-- ── Empty state -->
+  @if (orders.length === 0) {
+    <div class="empty-state">
+      <span class="empty-state__icon">📦</span>
+      <h3 class="empty-state__title">No orders yet</h3>
+      <p class="empty-state__desc">Once you place an order it will appear here.</p>
+      <button class="btn btn--primary" (click)="goToShop()">Start Shopping →</button>
+    </div>
+  }
+
+  <!-- ── Orders list -->
+  <div class="orders-list">
+    @for (order of orders; track order.id) {
+      <div
+        class="order-card"
+        [class.order-card--expanded]="isExpanded(order.id)"
+        (click)="toggleOrder(order.id)">
+
+        <!-- ── Card header -->
+        <div class="order-card__header">
+          <div class="order-card__left">
+            <span class="order-card__id">{{ order.id }}</span>
+            <span class="order-card__date">Ordered on {{ order.date }}</span>
+            <span class="order-card__items">{{ order.items.join(', ') }}</span>
+          </div>
+          <div class="order-card__right">
+            <span
+              class="order-card__status"
+              [style.background]="order.statusColor + '22'"
+              [style.color]="order.statusColor">
+              {{ order.status }}
+            </span>
+            <span class="order-card__total">${{ order.total.toFixed(2) }}</span>
+            <span class="order-card__chevron" [class.order-card__chevron--open]="isExpanded(order.id)">
+              ›
+            </span>
+          </div>
+        </div>
+
+        <!-- ── Expanded tracker -->
+        @if (isExpanded(order.id)) {
+          <div class="order-tracker" (click)="$event.stopPropagation()">
+
+            <!-- Step progress -->
+            <div class="tracker-steps">
+              @for (step of steps; track step; let i = $index) {
+                <div class="tracker-step" [class.tracker-step--done]="isStepDone(i, order.status)">
+                  <div class="tracker-step__dot">
+                    @if (isStepDone(i, order.status)) { ✓ } @else { {{ i + 1 }} }
+                  </div>
+                  <span class="tracker-step__label">{{ step }}</span>
+                </div>
+                @if (i < steps.length - 1) {
+                  <div class="tracker-line"
+                    [class.tracker-line--done]="isStepDone(i + 1, order.status)">
+                  </div>
+                }
+              }
+            </div>
+
+            <!-- Address -->
+            <div class="order-address">
+              <span class="order-address__label">📍 Delivery address</span>
+              <span class="order-address__value">{{ order.address }}</span>
+            </div>
+
+            <!-- Actions -->
+            <div class="order-actions">
+              <button class="btn btn--track">Track Order</button>
+              <button class="btn btn--invoice">Invoice</button>
+              @if (order.status === 'Delivered') {
+                <button class="btn btn--return">Return Item</button>
+              }
+              @if (order.status === 'Processing') {
+                <button class="btn btn--cancel">Cancel Order</button>
+              }
+            </div>
+
+          </div>
+        }
+
+      </div>
+    }
+  </div>
+
+</div>
